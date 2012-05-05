@@ -1,3 +1,4 @@
+
 package com.reindeermobile.pexeso.main;
 
 import org.anddev.andengine.engine.Engine;
@@ -25,10 +26,10 @@ import java.util.Random;
 public class Main extends BaseGameActivity {
 
     private static final int START_Y = 20;
-    private static final int START_X = -5;
-    private static final int X = 90;
-    private static final int Y = 107;
-    private static final float SCALE = 0.60f;
+    private static final int START_X = 20;
+    private static final int X = 150;
+    private static final int Y = 150;
+    private static final float SCALE = 1.1f;
 
     private static final String TAG = "Pexeso";
 
@@ -70,16 +71,16 @@ public class Main extends BaseGameActivity {
 
         TiledTextureRegion cardsTexture = BitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(
-                        this.mBitmapTextureAtlas, this, "cards.png", 0, 0, 8, 2);
+                        this.mBitmapTextureAtlas, this, "cards.png", 0, 0, 8, 4);
 
         List<Integer> cards = new ArrayList<Integer>();
-        for (int i = 1; i < 16; i++) {
+        for (int i = 1; i <= 12; i++) {
             cards.add(i);
             cards.add(i);
         }
 
         cardsSprite = new ArrayList<TiledSprite>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 24; i++) {
             cardsSprite.add(null);
         }
 
@@ -87,9 +88,10 @@ public class Main extends BaseGameActivity {
         int y = START_Y;
 
         int cardIndex = 0;
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 4; j >= 0; j--) {
+        for (int i = 3; i >= 0; i--) {
+            for (int j = 2; j >= 0; j--) {
                 Random random = new Random();
+                Log.d("debug", cards.size() + "");
                 int index = random.nextInt(cards.size());
                 int card = cards.remove(index);
                 table.add(card);
@@ -97,10 +99,6 @@ public class Main extends BaseGameActivity {
                         cardsSprite.get(cardIndex), cardIndex);
                 cardIndex++;
             }
-        }
-
-        for (Integer index : table) {
-            Log.d(TAG, "" + index);
         }
 
         mMainScene.setTouchAreaBindingEnabled(true);
@@ -115,28 +113,28 @@ public class Main extends BaseGameActivity {
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
                     final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
-                        this.setCurrentTileIndex(card);
-                        if (Main.this.lastIndex >= 0) {
-                            Log.d(TAG, "lastIndex: " + Main.this.lastIndex);
-                            Log.d(TAG, "index: " + index);
-                            Log.d(TAG,
-                                    "Main.this.table.last: "
-                                            + Main.this.table.get(Main.this.lastIndex));
-                            Log.d(TAG, "Main.this.table.actual: " + Main.this.table.get(index));
-                            if (Main.this.lastIndex != index
-                                    && Main.this.table.get(index) != Main.this.table
-                                            .get(Main.this.lastIndex) && Main.this.table
-                                            .get(Main.this.lastIndex) != 100
-                                    && Main.this.table.get(index) != 100) {
-                                Main.this.cardsSprite.get(Main.this.lastIndex).setCurrentTileIndex(
-                                        0);
-                            }
-                            if (Main.this.table.get(index) == Main.this.table
-                                    .get(Main.this.lastIndex) && index != Main.this.lastIndex) {
-                                Main.this.table.set(index, 100);
-                                Main.this.table.set(Main.this.lastIndex, 100);
-                            }
+                    this.setCurrentTileIndex(card);
+                    if (Main.this.lastIndex >= 0) {
+                        Log.d(TAG, "lastIndex: " + Main.this.lastIndex);
+                        Log.d(TAG, "index: " + index);
+                        Log.d(TAG,
+                                "Main.this.table.last: "
+                                        + Main.this.table.get(Main.this.lastIndex));
+                        Log.d(TAG, "Main.this.table.actual: " + Main.this.table.get(index));
+                        if (Main.this.lastIndex != index
+                                && Main.this.table.get(index) != Main.this.table
+                                        .get(Main.this.lastIndex) && Main.this.table
+                                        .get(Main.this.lastIndex) != 100
+                                && Main.this.table.get(index) != 100) {
+                            Main.this.cardsSprite.get(Main.this.lastIndex).setCurrentTileIndex(
+                                    0);
                         }
+                        if (Main.this.table.get(index) == Main.this.table
+                                .get(Main.this.lastIndex) && index != Main.this.lastIndex) {
+                            Main.this.table.set(index, 100);
+                            Main.this.table.set(Main.this.lastIndex, 100);
+                        }
+                    }
                     Main.this.lastIndex = index;
                 }
                 return true;
