@@ -1,31 +1,41 @@
 
 package com.reindeermobile.pexeso.main;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.handler.timer.ITimerCallback;
+import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.TiledSprite;
+import org.anddev.andengine.entity.text.ChangeableText;
+import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.input.touch.TouchEvent;
+import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
+import org.anddev.andengine.util.HorizontalAlign;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Main extends BaseGameActivity {
 
-    private static final int START_Y = 20;
+    private static final int CARD_NUMBERS = 25;
+    private static final int START_Y = 100;
     private static final int START_X = 20;
     private static final int X = 150;
     private static final int Y = 150;
@@ -44,6 +54,14 @@ public class Main extends BaseGameActivity {
     private static final int CAMERA_WIDTH = 480;
     private static final int CAMERA_HEIGHT = 720;
 
+    private BitmapTextureAtlas mFontTexture;
+    private Font mFont;
+    private ChangeableText timeText;
+    private ChangeableText clickText;
+    private int clickNumber = 0;
+    private boolean isInPlay = false;
+    private int solved = 0;
+
     @Override
     public Engine onLoadEngine() {
         mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
@@ -60,6 +78,14 @@ public class Main extends BaseGameActivity {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
         mEngine.getTextureManager().loadTexture(mBitmapTextureAtlas);
+        this.mFontTexture = new BitmapTextureAtlas(256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        this.mFont = new Font(this.mFontTexture, Typeface.create(Typeface.DEFAULT, Typeface.BOLD),
+                32, true, Color.BLACK);
+
+        this.mEngine.getTextureManager().loadTexture(this.mFontTexture);
+        this.mEngine.getFontManager().loadFont(this.mFont);
     }
 
     @Override
@@ -69,18 +95,36 @@ public class Main extends BaseGameActivity {
         mMainScene = new Scene();
         mMainScene.setBackground(new ColorBackground(0.098f, 0.62f, 0.87f));
 
+        Text playerName = new Text(10, 10, this.mFont, "Player1");
+        mMainScene.attachChild(playerName);
+
+        timeText = new ChangeableText(230, 10, this.mFont,
+                "0.0", HorizontalAlign.CENTER, 7);
+        mMainScene.attachChild(timeText);
+
+        clickText = new ChangeableText(400, 10, this.mFont, "0", HorizontalAlign.RIGHT, 7);
+        mMainScene.attachChild(clickText);
+
+        this.mMainScene.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback() {
+            float time = 0.0f;
+
+            @Override
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                if (isInPlay) {
+                    time += 0.1f;
+                    timeText.setText(new DecimalFormat("#0.0").format(time) + "");
+                }
+            }
+        }));
+
         TiledTextureRegion cardsTexture = BitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(
                         this.mBitmapTextureAtlas, this, "cards.png", 0, 0, 8, 4);
 
-        List<Integer> cards = new ArrayList<Integer>();
-        for (int i = 1; i <= 12; i++) {
-            cards.add(i);
-            cards.add(i);
-        }
+        List<Integer> randomCards = getRandomCards(24, 6);
 
         cardsSprite = new ArrayList<TiledSprite>();
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < CARD_NUMBERS; i++) {
             cardsSprite.add(null);
         }
 
@@ -91,9 +135,9 @@ public class Main extends BaseGameActivity {
         for (int i = 3; i >= 0; i--) {
             for (int j = 2; j >= 0; j--) {
                 Random random = new Random();
-                Log.d("debug", cards.size() + "");
-                int index = random.nextInt(cards.size());
-                int card = cards.remove(index);
+                Log.d("debug", randomCards.size() + "");
+                int index = random.nextInt(randomCards.size());
+                int card = randomCards.remove(index);
                 table.add(card);
                 createCard(cardsTexture.clone(), x + j * X, y + i * Y, card,
                         cardsSprite.get(cardIndex), cardIndex);
@@ -102,7 +146,25 @@ public class Main extends BaseGameActivity {
         }
 
         mMainScene.setTouchAreaBindingEnabled(true);
+
         return mMainScene;
+    }
+
+    private List<Integer> getRandomCards(int cardNumbers, int pairs) {
+        List<Integer> cards = new ArrayList<Integer>();
+        for (int i = 1; i <= cardNumbers; i++) {
+            cards.add(i);
+        }
+        List<Integer> randomCards = new ArrayList<Integer>();
+        for (int j = 0; j < pairs; j++) {
+            Random random = new Random();
+            int selectedCardIndex = random.nextInt(cards.size() - 1) + 1;
+            int selectedCard = cards.get(selectedCardIndex);
+            cards.remove(selectedCardIndex);
+            randomCards.add(selectedCard);
+            randomCards.add(selectedCard);
+        }
+        return randomCards;
     }
 
     private void createCard(TiledTextureRegion cardsTexture, int x, int y, final int card,
@@ -113,14 +175,11 @@ public class Main extends BaseGameActivity {
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
                     final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
+                    Main.this.isInPlay = true;
+                    Main.this.clickNumber++;
+                    Main.this.clickText.setText(Main.this.clickNumber + "");
                     this.setCurrentTileIndex(card);
                     if (Main.this.lastIndex >= 0) {
-                        Log.d(TAG, "lastIndex: " + Main.this.lastIndex);
-                        Log.d(TAG, "index: " + index);
-                        Log.d(TAG,
-                                "Main.this.table.last: "
-                                        + Main.this.table.get(Main.this.lastIndex));
-                        Log.d(TAG, "Main.this.table.actual: " + Main.this.table.get(index));
                         if (Main.this.lastIndex != index
                                 && Main.this.table.get(index) != Main.this.table
                                         .get(Main.this.lastIndex) && Main.this.table
@@ -131,6 +190,10 @@ public class Main extends BaseGameActivity {
                         }
                         if (Main.this.table.get(index) == Main.this.table
                                 .get(Main.this.lastIndex) && index != Main.this.lastIndex) {
+                            Main.this.solved++;
+                            if (Main.this.solved > 5) {
+                                Main.this.isInPlay = false;
+                            }
                             Main.this.table.set(index, 100);
                             Main.this.table.set(Main.this.lastIndex, 100);
                         }
