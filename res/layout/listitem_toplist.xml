@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="48dip"
+    android:background="@color/color_button_middle" >
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dip"
+        android:text="[name]"
+        android:textColor="@color/color_foreground"
+        android:textSize="19sp" />
+    <TextView
+        android:id="@+id/textViewClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dip"
+        android:text="[click]"
+        android:textColor="@color/color_foreground"
+        android:textSize="19sp" />
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dip"
+        android:layout_toLeftOf="@+id/textViewClick"
+        android:text="[time]"
+        android:textColor="@color/color_foreground"
+        android:textSize="19sp" />
+</RelativeLayout>

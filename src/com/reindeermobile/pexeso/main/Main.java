@@ -79,7 +79,8 @@ public class Main extends BaseGameActivity {
             cards.add(i);
         }
 
-        cardsSprite = new ArrayList<TiledSprite>();
+        cardsSprite = new ArrayList<TiledSprite>(24);
+        //Máté nem tudja miért csinálta ezt a fost.
         for (int i = 0; i < 24; i++) {
             cardsSprite.add(null);
         }
