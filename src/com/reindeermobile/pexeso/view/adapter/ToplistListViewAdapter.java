@@ -43,7 +43,7 @@ public class ToplistListViewAdapter extends BaseAdapter {
 		Presenter.getInst().subscribeToServices(this.viewHandler,
 				DatabaseController.SEND_RECORD_LIST);
 	}
-
+	
 	public int getCount() {
 		return this.recordList.size();
 	}

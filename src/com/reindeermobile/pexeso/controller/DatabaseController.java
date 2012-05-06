@@ -41,6 +41,8 @@ public class DatabaseController extends AbstractController {
 
 		this.databaseAdapter = DbAdapterFactory.createInstance(Record.class,
 				context, "am_pexeso_database", 1);
+		
+		this.initTasks();
 	}
 
 	@Override
@@ -48,6 +50,11 @@ public class DatabaseController extends AbstractController {
 		super.registerTask(SAVE_RECORD, new ContollerTask() {
 			@Override
 			public void execute(Callback sender, MessageObject messageObject) {
+				if (messageObject != null
+						&& messageObject.hasData(Record.class)) {
+					Record record = (Record) messageObject.getData();
+					databaseAdapter.insert(record);
+				}
 			}
 		});
 		super.registerTask(GET_RECORD_LIST, new ContollerTask() {

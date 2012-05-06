@@ -2,13 +2,16 @@ package com.reindeermobile.pexeso.view;
 
 import com.reindeermobile.pexeso.R;
 import com.reindeermobile.pexeso.controller.DatabaseController;
+import com.reindeermobile.pexeso.entity.Record;
 import com.reindeermobile.pexeso.main.Main;
+import com.reindeermobile.reindeerutils.mvp.MessageObject;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
 import com.reindeermobile.reindeerutils.mvp.ViewHandler;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract.Contacts.Data;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +37,13 @@ public class MenuActivity extends Activity implements OnClickListener {
 				this.startToplist();
 				break;
 			case R.id.buttonAbout:
+				Record record = new Record();
+				record.setName("sdlkfé");
+				record.setClicks(324);
+				record.setTime(23.0f);
+				Presenter.getInst().sendModelMessage(
+						DatabaseController.SAVE_RECORD,
+						new MessageObject(record));
 				break;
 			default:
 				Log.d(TAG, "onClick - unknown view");
@@ -41,20 +51,20 @@ public class MenuActivity extends Activity implements OnClickListener {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.layout_main);
-		
+
 		this.initLayout();
 
 		this.viewHandler = new ViewHandler(TAG);
-		
+
 		Presenter.getInst().subscribeToServices(this.viewHandler,
 				DatabaseController.SEND_RECORD_LIST);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -64,12 +74,12 @@ public class MenuActivity extends Activity implements OnClickListener {
 		this.playButton = (Button) findViewById(R.id.buttonPlay);
 		this.toplistButton = (Button) findViewById(R.id.buttonToplist);
 		this.aboutButton = (Button) findViewById(R.id.buttonAbout);
-		
+
 		this.playButton.setOnClickListener(this);
 		this.toplistButton.setOnClickListener(this);
 		this.aboutButton.setOnClickListener(this);
 	}
-	
+
 	private void startToplist() {
 		Intent playIntent = new Intent(this, ToplistActivity.class);
 		this.startActivity(playIntent);
