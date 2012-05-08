@@ -16,16 +16,24 @@ public class Record implements Comparable<Record>, Parcelable {
 	private Long id;
 
 	@Column
-	String name;
+	private String name;
 
 	@Column
-	Float time;
+	private Float time;
 
 	@Column
-	Integer clicks;
+	private Integer clicks;
 
 	@Column
-	Integer level;
+	private Integer level;
+
+	public Record() {
+		super();
+		time = 0f;
+		name = "";
+		clicks = 0;
+		level = 0;
+	}
 
 	public final String getName() {
 		return this.name;
@@ -93,6 +101,13 @@ public class Record implements Comparable<Record>, Parcelable {
 		} else {
 			return 1;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Record [id=" + this.id + ", name=" + this.name + ", time="
+				+ this.time + ", clicks=" + this.clicks + ", level="
+				+ this.level + "]";
 	}
 
 }

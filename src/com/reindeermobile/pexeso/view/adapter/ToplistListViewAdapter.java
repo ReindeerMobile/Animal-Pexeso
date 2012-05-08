@@ -9,12 +9,14 @@ import com.reindeermobile.reindeerutils.mvp.ViewHandler.IViewTask;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class ToplistListViewAdapter extends BaseAdapter {
 		Presenter.getInst().subscribeToServices(this.viewHandler,
 				DatabaseController.SEND_RECORD_LIST);
 	}
-	
+
 	public int getCount() {
 		return this.recordList.size();
 	}
@@ -61,35 +63,38 @@ public class ToplistListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Record record = this.recordList.get(position);
-		String name = record.getName();
-		int time = record.getClicks();
+		if (record != null) {
+			String name = record.getName();
+			float time = record.getTime();
+			int clicks = record.getClicks();
+			if (convertView == null) {
+				LayoutInflater inflater = (LayoutInflater) this.context
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		if (convertView == null) {
-			LayoutInflater inflater = (LayoutInflater) this.context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = inflater.inflate(R.layout.listitem_toplist,
+						parent, false);
 
-			convertView = inflater.inflate(R.layout.listitem_toplist, parent,
-					false);
+				recordListItemHolder = new RecordListItemHolder();
+				recordListItemHolder.nameTextView = (TextView) convertView
+						.findViewById(R.id.textViewName);
+				recordListItemHolder.clickTextView = (TextView) convertView
+						.findViewById(R.id.textViewClick);
+				recordListItemHolder.timeTextView = (TextView) convertView
+						.findViewById(R.id.textViewTime);
 
-			recordListItemHolder = new RecordListItemHolder();
-			recordListItemHolder.nameTextView = (TextView) convertView
-					.findViewById(R.id.textViewName);
-			recordListItemHolder.clickTextView = (TextView) convertView
-					.findViewById(R.id.textViewClick);
-			recordListItemHolder.timeTextView = (TextView) convertView
-					.findViewById(R.id.textViewTime);
-
-			convertView.setTag(recordListItemHolder);
-		} else {
-			recordListItemHolder = (RecordListItemHolder) convertView.getTag();
+				convertView.setTag(recordListItemHolder);
+			} else {
+				recordListItemHolder = (RecordListItemHolder) convertView
+						.getTag();
+			}
+			recordListItemHolder.nameTextView.setText(name);
+			recordListItemHolder.clickTextView.setText(String.valueOf(clicks));
+			recordListItemHolder.timeTextView.setText(new DecimalFormat("#0.0")
+					.format(time));
 		}
-
-		recordListItemHolder.nameTextView.setText(name);
-		recordListItemHolder.clickTextView.setText(String.valueOf(time));
-		recordListItemHolder.timeTextView.setText(String.valueOf(time));
 		return convertView;
 	}
-	
+
 	private void initTasks() {
 		this.viewHandler.registerViewTask(DatabaseController.SEND_RECORD_LIST,
 				new IViewTask() {
@@ -98,9 +103,12 @@ public class ToplistListViewAdapter extends BaseAdapter {
 						ArrayList<Record> newRecords = bundle
 								.getParcelableArrayList(DatabaseController.RECORD_LIST);
 						if (newRecords != null) {
+							Log.d(TAG, "execute - newRecords: " + newRecords);
 							recordList = newRecords;
-							notifyDataSetChanged();
+						} else {
+							recordList = new ArrayList<Record>();
 						}
+						notifyDataSetChanged();
 					}
 				});
 	}

@@ -11,7 +11,6 @@ import com.reindeermobile.reindeerutils.mvp.ViewHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts.Data;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +39,8 @@ public class MenuActivity extends Activity implements OnClickListener {
 				Record record = new Record();
 				record.setName("sdlkfé");
 				record.setClicks(324);
-				record.setTime(23.0f);
+				record.setTime(23f);
+				record.setLevel(0);
 				Presenter.getInst().sendModelMessage(
 						DatabaseController.SAVE_RECORD,
 						new MessageObject(record));
@@ -70,6 +70,12 @@ public class MenuActivity extends Activity implements OnClickListener {
 		super.onResume();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Log.d(TAG, "onActivityResult - receive data");
+	}
+
 	private void initLayout() {
 		this.playButton = (Button) findViewById(R.id.buttonPlay);
 		this.toplistButton = (Button) findViewById(R.id.buttonToplist);
@@ -87,6 +93,6 @@ public class MenuActivity extends Activity implements OnClickListener {
 
 	private void startPlay() {
 		Intent playIntent = new Intent(this, Main.class);
-		this.startActivity(playIntent);
+		this.startActivityForResult(playIntent, 1);
 	}
 }

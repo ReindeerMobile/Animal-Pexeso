@@ -26,6 +26,7 @@
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonClear"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout1"
         android:layout_margin="8dip"
@@ -34,4 +35,15 @@
         android:dividerHeight="8dip"
         android:padding="4dip" >
     </ListView>
+    <Button
+        android:id="@+id/buttonClear"
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:background="@drawable/selector_yellow_button"
+        android:text="Clear" />
 </RelativeLayout>

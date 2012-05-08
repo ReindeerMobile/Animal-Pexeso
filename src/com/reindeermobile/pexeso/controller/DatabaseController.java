@@ -12,6 +12,7 @@ import com.reindeermobile.reindeerutils.mvp.Presenter.ViewServices;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler.Callback;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,13 +22,14 @@ public class DatabaseController extends AbstractController {
 
 	public static final String SAVE_RECORD = "SAVE_RECORD";
 	public static final String GET_RECORD_LIST = "GET_RECORD_LIST";
+	public static final String CLEAR_RECORD_LIST = "CLEAR_RECORD_LIST";
 
 	public static final String SAVE_RECORD_OK = "SAVE_RECORD_OK";
 	public static final String SEND_RECORD_LIST = "SEND_RECORD_LIST";
 
 	@ControllerServices
 	public static final String[] CONTROLLER_SERVICES = new String[] {
-			SAVE_RECORD, GET_RECORD_LIST };
+			SAVE_RECORD, GET_RECORD_LIST, CLEAR_RECORD_LIST };
 
 	@ViewServices
 	public static final String[] VIEW_SERVICES = new String[] { SAVE_RECORD_OK,
@@ -53,25 +55,43 @@ public class DatabaseController extends AbstractController {
 				if (messageObject != null
 						&& messageObject.hasData(Record.class)) {
 					Record record = (Record) messageObject.getData();
+					Log.d(TAG, "execute - before persist: " + record);
 					databaseAdapter.insert(record);
+					Log.d(TAG, "execute - after persist: " + record);
 				}
+			}
+		});
+
+		super.registerTask(CLEAR_RECORD_LIST, new ContollerTask() {
+			@Override
+			public void execute(Callback sender, MessageObject messageObject) {
+				Log.d(TAG, "execute - clear");
+				databaseAdapter.clear();
+				sendRecords();
 			}
 		});
 
 		super.registerTask(GET_RECORD_LIST, new ContollerTask() {
 			@Override
 			public void execute(Callback sender, MessageObject messageObject) {
-				ArrayList<Record> records = (ArrayList<Record>) databaseAdapter
-						.list();
-
-				Collections.sort(records);
-
-				Bundle messageBundle = new Bundle();
-				messageBundle.putParcelableArrayList(RECORD_LIST, records);
-
-				Presenter.getInst().sendViewMessage(SEND_RECORD_LIST,
-						messageBundle);
+				sendRecords();
 			}
 		});
+	}
+
+	private void sendRecords() {
+		ArrayList<Record> records = (ArrayList<Record>) databaseAdapter.list();
+
+		if (records != null) {
+			Collections.sort(records);
+		}
+
+		Log.d(TAG, "sendRecords - records: " + records);
+
+		Bundle messageBundle = new Bundle();
+		messageBundle.putParcelableArrayList(RECORD_LIST, records);
+
+		Presenter.getInst().sendViewMessage(SEND_RECORD_LIST, messageBundle);
+
 	}
 }
