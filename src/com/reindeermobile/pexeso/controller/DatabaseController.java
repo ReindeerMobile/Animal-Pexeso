@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler.Callback;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DatabaseController extends AbstractController {
 	public static final String RECORD_LIST = "RECORD_LIST";
@@ -40,7 +41,7 @@ public class DatabaseController extends AbstractController {
 
 		this.databaseAdapter = DbAdapterFactory.createInstance(Record.class,
 				context, "am_pexeso_database", 1);
-		
+
 		this.initTasks();
 	}
 
@@ -56,12 +57,14 @@ public class DatabaseController extends AbstractController {
 				}
 			}
 		});
-		
+
 		super.registerTask(GET_RECORD_LIST, new ContollerTask() {
 			@Override
 			public void execute(Callback sender, MessageObject messageObject) {
 				ArrayList<Record> records = (ArrayList<Record>) databaseAdapter
 						.list();
+
+				Collections.sort(records);
 
 				Bundle messageBundle = new Bundle();
 				messageBundle.putParcelableArrayList(RECORD_LIST, records);

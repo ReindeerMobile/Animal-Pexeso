@@ -9,13 +9,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 @Table(name = "am_record")
-public class Record implements Parcelable {
+public class Record implements Comparable<Record>, Parcelable {
 	@Id
 	@AutoIncrement
 	@Column(name = "_id")
-	private
-	Long id;
-	
+	private Long id;
+
 	@Column
 	String name;
 
@@ -79,6 +78,21 @@ public class Record implements Parcelable {
 		dest.writeFloat(this.time);
 		dest.writeInt(this.level);
 		dest.writeInt(this.clicks);
+	}
+
+	@Override
+	public int compareTo(Record other) {
+		if (other != null) {
+			if (this.time < other.time) {
+				return -1;
+			} else if (this.time > other.time) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} else {
+			return 1;
+		}
 	}
 
 }
