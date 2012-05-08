@@ -34,7 +34,6 @@ public class DatabaseController extends AbstractController {
 
 	private IDatabaseAdapter<Record> databaseAdapter;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void init(Context context) {
 		DbAdapterFactory.INSTANCE.init(Record.class);
@@ -57,6 +56,7 @@ public class DatabaseController extends AbstractController {
 				}
 			}
 		});
+		
 		super.registerTask(GET_RECORD_LIST, new ContollerTask() {
 			@Override
 			public void execute(Callback sender, MessageObject messageObject) {

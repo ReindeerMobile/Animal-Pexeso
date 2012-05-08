@@ -1,14 +1,21 @@
 package com.reindeermobile.pexeso.entity;
 
-import com.reindeermobile.reindeerutils.db.BaseDbEntity;
+import com.reindeermobile.reindeerutils.db.DbAdapterFactory.AutoIncrement;
 import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Column;
+import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Id;
 import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Table;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 @Table(name = "am_record")
-public class Record extends BaseDbEntity implements Parcelable {
+public class Record implements Parcelable {
+	@Id
+	@AutoIncrement
+	@Column(name = "_id")
+	private
+	Long id;
+	
 	@Column
 	String name;
 
@@ -51,6 +58,14 @@ public class Record extends BaseDbEntity implements Parcelable {
 
 	public final void setLevel(Integer level) {
 		this.level = level;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override
