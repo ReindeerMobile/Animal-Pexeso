@@ -11,33 +11,46 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@color/color_button_middle" >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dip"
+            android:text="@string/app_name"
+            android:textColor="@color/color_foreground"
+            android:textSize="22sp" />
     </RelativeLayout>
-    <Button
-        android:id="@+id/buttonPlay"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout1"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="45dp"
-        android:text="Play" />
     <Button
         android:id="@+id/buttonToplist"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonPlay"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="45dp"
+        android:layout_height="48dip"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="45dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:layout_marginTop="45dip"
+        android:background="@drawable/selector_yellow_button"
         android:text="Toplist" />
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:layout_above="@+id/buttonToplist"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:background="@drawable/selector_yellow_button"
+        android:text="Play" />
     <Button
         android:id="@+id/buttonAbout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dip"
         android:layout_below="@+id/buttonToplist"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="45dp"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:background="@drawable/selector_yellow_button"
         android:text="About" />
 </RelativeLayout>
