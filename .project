@@ -3,6 +3,7 @@
 	<name>Animal-Pexeso</name>
 	<comment></comment>
 	<projects>
+		<project>ReindeerUtils</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
