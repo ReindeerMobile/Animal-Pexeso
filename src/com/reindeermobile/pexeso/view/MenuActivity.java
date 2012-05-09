@@ -3,7 +3,6 @@ package com.reindeermobile.pexeso.view;
 import com.reindeermobile.pexeso.R;
 import com.reindeermobile.pexeso.controller.DatabaseController;
 import com.reindeermobile.pexeso.entity.Record;
-import com.reindeermobile.pexeso.main.Main;
 import com.reindeermobile.reindeerutils.mvp.MessageObject;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
 import com.reindeermobile.reindeerutils.mvp.ViewHandler;
@@ -92,7 +91,7 @@ public class MenuActivity extends Activity implements OnClickListener {
 	}
 
 	private void startPlay() {
-		Intent playIntent = new Intent(this, Main.class);
+		Intent playIntent = new Intent(this, GameActivity.class);
 		this.startActivityForResult(playIntent, 1);
 	}
 }

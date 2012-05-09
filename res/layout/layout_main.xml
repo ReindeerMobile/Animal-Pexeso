@@ -32,7 +32,7 @@
         android:layout_marginRight="16dip"
         android:layout_marginTop="45dip"
         android:background="@drawable/selector_yellow_button"
-        android:text="Toplist" />
+        android:text="@string/button_text_toplist" />
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="fill_parent"
@@ -42,7 +42,7 @@
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
         android:background="@drawable/selector_yellow_button"
-        android:text="Play" />
+        android:text="@string/button_text_play" />
     <Button
         android:id="@+id/buttonAbout"
         android:layout_width="fill_parent"
@@ -52,5 +52,5 @@
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
         android:background="@drawable/selector_yellow_button"
-        android:text="About" />
+        android:text="@string/button_text_about" />
 </RelativeLayout>

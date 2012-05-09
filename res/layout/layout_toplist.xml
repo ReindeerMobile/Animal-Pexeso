@@ -45,5 +45,5 @@
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
         android:background="@drawable/selector_yellow_button"
-        android:text="Clear" />
+        android:text="@string/button_text_clear" />
 </RelativeLayout>

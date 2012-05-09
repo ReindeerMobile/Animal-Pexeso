@@ -1,4 +1,4 @@
-package com.reindeermobile.pexeso.main;
+package com.reindeermobile.pexeso.view;
 
 import com.reindeermobile.pexeso.controller.DatabaseController;
 import com.reindeermobile.pexeso.entity.Record;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Main extends BaseGameActivity {
+public class GameActivity extends BaseGameActivity {
 
 	private static final int CARD_NUMBERS = 25;
 	private static final int START_Y = 100;
@@ -126,7 +126,7 @@ public class Main extends BaseGameActivity {
 						} else {
 							if (time > 0.0) {
 								Log.d(TAG, "onLoadScene - end");
-								Main.this.playTime = time;
+								GameActivity.this.playTime = time;
 							}
 						}
 					}
@@ -190,31 +190,31 @@ public class Main extends BaseGameActivity {
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
 					final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 				if (pSceneTouchEvent.isActionDown()) {
-					Main.this.isInPlay = true;
-					Main.this.clickNumber++;
-					Main.this.clickText.setText(Main.this.clickNumber + "");
+					GameActivity.this.isInPlay = true;
+					GameActivity.this.clickNumber++;
+					GameActivity.this.clickText.setText(GameActivity.this.clickNumber + "");
 					this.setCurrentTileIndex(card);
-					if (Main.this.lastIndex >= 0) {
-						if (Main.this.lastIndex != index
-								&& Main.this.table.get(index) != Main.this.table
-										.get(Main.this.lastIndex)
-								&& Main.this.table.get(Main.this.lastIndex) != 100
-								&& Main.this.table.get(index) != 100) {
-							Main.this.cardsSprite.get(Main.this.lastIndex)
+					if (GameActivity.this.lastIndex >= 0) {
+						if (GameActivity.this.lastIndex != index
+								&& GameActivity.this.table.get(index) != GameActivity.this.table
+										.get(GameActivity.this.lastIndex)
+								&& GameActivity.this.table.get(GameActivity.this.lastIndex) != 100
+								&& GameActivity.this.table.get(index) != 100) {
+							GameActivity.this.cardsSprite.get(GameActivity.this.lastIndex)
 									.setCurrentTileIndex(0);
 						}
-						if (Main.this.table.get(index) == Main.this.table
-								.get(Main.this.lastIndex)
-								&& index != Main.this.lastIndex) {
-							Main.this.solved++;
-							if (Main.this.solved > 5) {
-								Main.this.isInPlay = false;
+						if (GameActivity.this.table.get(index) == GameActivity.this.table
+								.get(GameActivity.this.lastIndex)
+								&& index != GameActivity.this.lastIndex) {
+							GameActivity.this.solved++;
+							if (GameActivity.this.solved > 5) {
+								GameActivity.this.isInPlay = false;
 							}
-							Main.this.table.set(index, 100);
-							Main.this.table.set(Main.this.lastIndex, 100);
+							GameActivity.this.table.set(index, 100);
+							GameActivity.this.table.set(GameActivity.this.lastIndex, 100);
 						}
 					}
-					Main.this.lastIndex = index;
+					GameActivity.this.lastIndex = index;
 				}
 				return true;
 			}
@@ -224,7 +224,7 @@ public class Main extends BaseGameActivity {
 		mMainScene.attachChild(cardSprite);
 		mMainScene.registerTouchArea(cardSprite);
 
-		Main.this.cardsSprite.set(index, cardSprite);
+		GameActivity.this.cardsSprite.set(index, cardSprite);
 	}
 
 	@Override

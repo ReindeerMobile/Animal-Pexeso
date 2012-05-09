@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.Main"
+            android:name=".view.GameActivity"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:screenOrientation="portrait" >
