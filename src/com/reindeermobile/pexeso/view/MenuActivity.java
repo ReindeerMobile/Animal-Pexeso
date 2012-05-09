@@ -29,7 +29,7 @@ public class MenuActivity extends Activity implements OnClickListener {
 		if (v != null) {
 			switch (v.getId()) {
 			case R.id.buttonPlay:
-				this.startPlay();
+				this.startNewGame();
 				break;
 			case R.id.buttonToplist:
 				this.startToplist();
@@ -90,8 +90,8 @@ public class MenuActivity extends Activity implements OnClickListener {
 		this.startActivity(playIntent);
 	}
 
-	private void startPlay() {
-		Intent playIntent = new Intent(this, GameActivity.class);
-		this.startActivityForResult(playIntent, 1);
+	private void startNewGame() {
+		Intent playIntent = new Intent(this, NewGameActivity.class);
+		this.startActivity(playIntent);
 	}
 }

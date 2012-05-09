@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@color/color_button_middle" >
+        android:background="@drawable/shape_header_yellow_normal" >
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -28,10 +28,11 @@
         android:layout_height="48dip"
         android:layout_centerInParent="true"
         android:layout_marginBottom="45dip"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="16dip"
+        android:layout_marginLeft="64dip"
+        android:layout_marginRight="64dip"
         android:layout_marginTop="45dip"
-        android:background="@drawable/selector_yellow_button"
+        android:background="@drawable/selector_button_yellow"
+        android:drawableLeft="@drawable/collections_view_as_list_dark"
         android:text="@string/button_text_toplist" />
     <Button
         android:id="@+id/buttonPlay"
@@ -39,9 +40,10 @@
         android:layout_height="48dip"
         android:layout_above="@+id/buttonToplist"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="16dip"
-        android:background="@drawable/selector_yellow_button"
+        android:layout_marginLeft="64dip"
+        android:layout_marginRight="64dip"
+        android:background="@drawable/selector_button_yellow"
+        android:drawableLeft="@drawable/av_play_dark"
         android:text="@string/button_text_play" />
     <Button
         android:id="@+id/buttonAbout"
@@ -49,8 +51,9 @@
         android:layout_height="48dip"
         android:layout_below="@+id/buttonToplist"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="16dip"
-        android:background="@drawable/selector_yellow_button"
+        android:layout_marginLeft="64dip"
+        android:layout_marginRight="64dip"
+        android:background="@drawable/selector_button_yellow"
+        android:drawableLeft="@drawable/action_about_dark"
         android:text="@string/button_text_about" />
 </RelativeLayout>

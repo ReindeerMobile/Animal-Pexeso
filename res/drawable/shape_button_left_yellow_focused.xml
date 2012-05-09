@@ -3,11 +3,11 @@
     <gradient
         android:angle="90"
         android:centerColor="@color/color_button_middle"
-        android:endColor="@color/color_button_dark"
-        android:startColor="@color/color_button_light" />
+        android:endColor="@color/color_button_middle"
+        android:startColor="@color/color_button_middle" />
     <corners
-        android:bottomLeftRadius="7dp"
+        android:bottomLeftRadius="0dp"
         android:bottomRightRadius="7dp"
-        android:topLeftRadius="7dp"
-        android:topRightRadius="7dp" />
+        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp" />
 </shape>

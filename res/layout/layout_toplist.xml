@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@color/color_button_middle" >
+        android:background="@drawable/shape_header_yellow_normal" >
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -44,6 +44,6 @@
         android:layout_marginBottom="8dip"
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
-        android:background="@drawable/selector_yellow_button"
+        android:background="@drawable/selector_button_yellow"
         android:text="@string/button_text_clear" />
 </RelativeLayout>

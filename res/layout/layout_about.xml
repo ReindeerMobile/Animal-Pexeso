@@ -9,7 +9,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@color/color_button_middle" >
+        android:background="@drawable/shape_title_yellow_normal" >
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"

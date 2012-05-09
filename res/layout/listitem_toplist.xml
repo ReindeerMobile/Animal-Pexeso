@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="48dip"
-    android:background="@drawable/selector_yellow_button" >
+    android:background="@drawable/selector_button_yellow" >
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
