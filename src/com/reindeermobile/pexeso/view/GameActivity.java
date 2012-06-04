@@ -2,7 +2,6 @@ package com.reindeermobile.pexeso.view;
 
 import com.reindeermobile.pexeso.controller.DatabaseController;
 import com.reindeermobile.pexeso.entity.Record;
-import com.reindeermobile.reindeerutils.mvp.MessageObject;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
 
 import org.anddev.andengine.engine.Engine;
@@ -29,6 +28,7 @@ import org.anddev.andengine.util.HorizontalAlign;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.text.DecimalFormat;
@@ -192,15 +192,18 @@ public class GameActivity extends BaseGameActivity {
 				if (pSceneTouchEvent.isActionDown()) {
 					GameActivity.this.isInPlay = true;
 					GameActivity.this.clickNumber++;
-					GameActivity.this.clickText.setText(GameActivity.this.clickNumber + "");
+					GameActivity.this.clickText
+							.setText(GameActivity.this.clickNumber + "");
 					this.setCurrentTileIndex(card);
 					if (GameActivity.this.lastIndex >= 0) {
 						if (GameActivity.this.lastIndex != index
 								&& GameActivity.this.table.get(index) != GameActivity.this.table
 										.get(GameActivity.this.lastIndex)
-								&& GameActivity.this.table.get(GameActivity.this.lastIndex) != 100
+								&& GameActivity.this.table
+										.get(GameActivity.this.lastIndex) != 100
 								&& GameActivity.this.table.get(index) != 100) {
-							GameActivity.this.cardsSprite.get(GameActivity.this.lastIndex)
+							GameActivity.this.cardsSprite.get(
+									GameActivity.this.lastIndex)
 									.setCurrentTileIndex(0);
 						}
 						if (GameActivity.this.table.get(index) == GameActivity.this.table
@@ -211,7 +214,8 @@ public class GameActivity extends BaseGameActivity {
 								GameActivity.this.isInPlay = false;
 							}
 							GameActivity.this.table.set(index, 100);
-							GameActivity.this.table.set(GameActivity.this.lastIndex, 100);
+							GameActivity.this.table.set(
+									GameActivity.this.lastIndex, 100);
 						}
 					}
 					GameActivity.this.lastIndex = index;
@@ -240,8 +244,12 @@ public class GameActivity extends BaseGameActivity {
 			record.setLevel(1);
 			record.setTime(playTime);
 
+			Bundle messageBundle = new Bundle();
+			messageBundle.putParcelable(DatabaseController.SAVE_RECORD, record);
 			Presenter.getInst().sendModelMessage(
-					DatabaseController.SAVE_RECORD, new MessageObject(record));
+					DatabaseController.SAVE_RECORD, messageBundle);
+			// Presenter.getInst().sendModelMessage(
+			// DatabaseController.SAVE_RECORD, new MessageObject(record));
 			this.finish();
 		}
 	}

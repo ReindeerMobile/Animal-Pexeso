@@ -40,9 +40,11 @@ public class MenuActivity extends Activity implements OnClickListener {
 				record.setClicks(324);
 				record.setTime(23f);
 				record.setLevel(0);
+				Bundle messageBundle = new Bundle();
+				messageBundle.putParcelable(DatabaseController.SAVE_RECORD,
+						record);
 				Presenter.getInst().sendModelMessage(
-						DatabaseController.SAVE_RECORD,
-						new MessageObject(record));
+						DatabaseController.SAVE_RECORD, messageBundle);
 				break;
 			default:
 				Log.d(TAG, "onClick - unknown view");

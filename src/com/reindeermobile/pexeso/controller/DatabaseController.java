@@ -1,17 +1,16 @@
 package com.reindeermobile.pexeso.controller;
 
 import com.reindeermobile.pexeso.entity.Record;
-import com.reindeermobile.reindeerutils.db.DbAdapterFactory;
-import com.reindeermobile.reindeerutils.db.IDatabaseAdapter;
+import com.reindeermobile.reindeerorm.EntityManagerFactory;
+import com.reindeermobile.reindeerorm.EntityManagable;
+import com.reindeermobile.reindeerorm.exception.EntityMappingException;
 import com.reindeermobile.reindeerutils.mvp.AbstractController;
-import com.reindeermobile.reindeerutils.mvp.MessageObject;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
 import com.reindeermobile.reindeerutils.mvp.Presenter.ControllerServices;
 import com.reindeermobile.reindeerutils.mvp.Presenter.ViewServices;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler.Callback;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -35,52 +34,57 @@ public class DatabaseController extends AbstractController {
 	public static final String[] VIEW_SERVICES = new String[] { SAVE_RECORD_OK,
 			SEND_RECORD_LIST };
 
-	private IDatabaseAdapter<Record> databaseAdapter;
+	private EntityManagable entityManager;
 
 	@Override
 	public void init(Context context) {
-		DbAdapterFactory.INSTANCE.init(Record.class);
+		EntityManagerFactory.INSTANCE.init(context, "am_pexeso_database1", 1,
+				Record.class);
 
-		this.databaseAdapter = DbAdapterFactory.createInstance(Record.class,
-				context, "am_pexeso_database", 1);
+		this.entityManager = EntityManagerFactory.createInstance();
 
 		this.initTasks();
 	}
 
 	@Override
 	protected void initTasks() {
-		super.registerTask(SAVE_RECORD, new ContollerTask() {
+		super.registerTask(SAVE_RECORD, new IContollerTask() {
 			@Override
-			public void execute(Callback sender, MessageObject messageObject) {
-				if (messageObject != null
-						&& messageObject.hasData(Record.class)) {
-					Record record = (Record) messageObject.getData();
+			public void execute(Bundle bundle) {
+				if (bundle != null) {
+					Record record = (Record) bundle.getParcelable(SAVE_RECORD);
 					Log.d(TAG, "execute - before persist: " + record);
-					databaseAdapter.insert(record);
+					try {
+						entityManager.persist(record, Record.class);
+					} catch (EntityMappingException exception) {
+						Log.w(TAG, "initTasks - " + SAVE_RECORD, exception);
+					}
 					Log.d(TAG, "execute - after persist: " + record);
 				}
 			}
 		});
 
-		super.registerTask(CLEAR_RECORD_LIST, new ContollerTask() {
+		super.registerTask(CLEAR_RECORD_LIST, new IContollerTask() {
 			@Override
-			public void execute(Callback sender, MessageObject messageObject) {
-				Log.d(TAG, "execute - clear");
-				databaseAdapter.clear();
+			public void execute(Bundle bundle) {
+				entityManager.createNamedNativeQuery("deleteAll", Record.class)
+						.execute();
 				sendRecords();
 			}
 		});
 
-		super.registerTask(GET_RECORD_LIST, new ContollerTask() {
+		super.registerTask(GET_RECORD_LIST, new IContollerTask() {
 			@Override
-			public void execute(Callback sender, MessageObject messageObject) {
+			public void execute(Bundle bundle) {
 				sendRecords();
 			}
 		});
 	}
 
 	private void sendRecords() {
-		ArrayList<Record> records = (ArrayList<Record>) databaseAdapter.list();
+		ArrayList<Record> records = null;
+		records = (ArrayList<Record>) entityManager.createNamedNativeQuery(
+				"listRecords", Record.class).list();
 
 		if (records != null) {
 			Collections.sort(records);

@@ -1,14 +1,19 @@
 package com.reindeermobile.pexeso.entity;
 
-import com.reindeermobile.reindeerutils.db.DbAdapterFactory.AutoIncrement;
-import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Column;
-import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Id;
-import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Table;
+import com.reindeermobile.reindeerorm.annotations.Table;
+import com.reindeermobile.reindeerorm.annotations.AutoIncrement;
+import com.reindeermobile.reindeerorm.annotations.Column;
+import com.reindeermobile.reindeerorm.annotations.Id;
+import com.reindeermobile.reindeerorm.annotations.NativeNamedQueries;
+import com.reindeermobile.reindeerorm.annotations.NativeNamedQuery;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 @Table(name = "am_record")
+@NativeNamedQueries({
+		@NativeNamedQuery(name = "listRecords", query = "select * from am_record order by clicks"),
+		@NativeNamedQuery(name = "deleteAll", query = "delete from am_record") })
 public class Record implements Comparable<Record>, Parcelable {
 	@Id
 	@AutoIncrement
