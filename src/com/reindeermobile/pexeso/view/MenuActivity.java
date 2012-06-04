@@ -3,7 +3,6 @@ package com.reindeermobile.pexeso.view;
 import com.reindeermobile.pexeso.R;
 import com.reindeermobile.pexeso.controller.DatabaseController;
 import com.reindeermobile.pexeso.entity.Record;
-import com.reindeermobile.reindeerutils.mvp.MessageObject;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
 import com.reindeermobile.reindeerutils.mvp.ViewHandler;
 
