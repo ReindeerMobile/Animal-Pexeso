@@ -1,8 +1,8 @@
 package com.reindeermobile.pexeso.controller;
 
 import com.reindeermobile.pexeso.entity.Record;
-import com.reindeermobile.reindeerorm.EntityManagerFactory;
 import com.reindeermobile.reindeerorm.EntityManagable;
+import com.reindeermobile.reindeerorm.EntityManagerFactory;
 import com.reindeermobile.reindeerorm.exception.EntityMappingException;
 import com.reindeermobile.reindeerutils.mvp.AbstractController;
 import com.reindeermobile.reindeerutils.mvp.Presenter;
@@ -38,8 +38,11 @@ public class DatabaseController extends AbstractController {
 
 	@Override
 	public void init(Context context) {
-		EntityManagerFactory.INSTANCE.init(context, "am_pexeso_database1", 1,
-				Record.class);
+//		Properties properties = new Properties();
+//		properties.put("databaseName", "am_pexeso_database1");
+		EntityManagerFactory.init(context, Record.class);
+		// EntityManagerFactory.INSTANCE.init(context, "am_pexeso_database1", 1,
+		// Record.class);
 
 		this.entityManager = EntityManagerFactory.createInstance();
 
