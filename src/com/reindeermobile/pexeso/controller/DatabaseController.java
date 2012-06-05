@@ -38,14 +38,7 @@ public class DatabaseController extends AbstractController {
 
 	@Override
 	public void init(Context context) {
-//		Properties properties = new Properties();
-//		properties.put("databaseName", "am_pexeso_database1");
-		EntityManagerFactory.init(context, Record.class);
-		// EntityManagerFactory.INSTANCE.init(context, "am_pexeso_database1", 1,
-		// Record.class);
-
 		this.entityManager = EntityManagerFactory.createInstance();
-
 		this.initTasks();
 	}
 
