@@ -10,7 +10,7 @@ import com.reindeermobile.reindeerorm.annotations.NativeNamedQuery;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-@Table(name = "am_record")
+@Table(name = "record")
 @NativeNamedQueries({
 		@NativeNamedQuery(name = "listRecords", query = "select * from am_record order by clicks"),
 		@NativeNamedQuery(name = "deleteAll", query = "delete from am_record") })
@@ -31,6 +31,9 @@ public class Record implements Comparable<Record>, Parcelable {
 
 	@Column
 	private Integer level;
+	
+//	@Column(name = "test_column")
+//	private String testColumn;
 
 	public Record() {
 		super();
@@ -79,6 +82,14 @@ public class Record implements Comparable<Record>, Parcelable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+//	public String getTestColumn() {
+//		return testColumn;
+//	}
+//
+//	public void setTestColumn(String testColumn) {
+//		this.testColumn = testColumn;
+//	}
 
 	@Override
 	public int describeContents() {
