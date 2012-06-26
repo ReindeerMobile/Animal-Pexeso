@@ -23,8 +23,8 @@ public class NewGameActivity extends Activity implements
 	public static final String SELECTED_GAME_MODE = "GAME_MODE";
 	public static final String SELECTED_GAME_LEVEL = "SELECTED_GAME_LEVEL";
 
-	private Button nextPlayerButton;
-	private Button prevPlayerButton;
+//	private Button nextPlayerButton;
+//	private Button prevPlayerButton;
 	private EditText playerNameEditText;
 
 	private ToggleButton classicModeToggleButton;
