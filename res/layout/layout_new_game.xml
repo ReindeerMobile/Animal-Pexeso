@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/color_background" >
+
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
@@ -11,6 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/shape_header_yellow_normal" >
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
             android:textColor="@color/color_foreground"
             android:textSize="20sp" />
     </RelativeLayout>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -35,9 +38,10 @@
         android:background="@drawable/shape_title_yellow_normal"
         android:paddingLeft="8dip"
         android:paddingTop="4dip"
-        android:text="Game type"
+        android:text="@string/game_type"
         android:textColor="@color/color_foreground"
         android:textSize="16sp" />
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -48,6 +52,7 @@
         android:layout_marginLeft="32dip"
         android:layout_marginRight="32dip"
         android:weightSum="1" >
+
         <ToggleButton
             android:id="@+id/toggleButtonClassic"
             android:layout_width="wrap_content"
@@ -56,6 +61,7 @@
             android:background="@drawable/selector_toggle_button_yellow_left"
             android:textOff="Classic"
             android:textOn="Classic" />
+
         <ToggleButton
             android:id="@+id/toggleButtonOther"
             android:layout_width="wrap_content"
@@ -65,6 +71,24 @@
             android:textOff="Other"
             android:textOn="Other" />
     </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -78,9 +102,10 @@
         android:background="@drawable/shape_title_yellow_normal"
         android:paddingLeft="8dip"
         android:paddingTop="4dip"
-        android:text="Game Level"
+        android:text="@string/game_level"
         android:textColor="@color/color_foreground"
         android:textSize="16sp" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
@@ -91,6 +116,7 @@
         android:layout_marginLeft="32dip"
         android:layout_marginRight="32dip"
         android:weightSum="0.9" >
+
         <ToggleButton
             android:id="@+id/toggleButtonEasy"
             android:layout_width="wrap_content"
@@ -99,6 +125,7 @@
             android:background="@drawable/selector_toggle_button_yellow_left"
             android:textOff="Easy"
             android:textOn="Easy" />
+
         <ToggleButton
             android:id="@+id/toggleButtonMedium"
             android:layout_width="wrap_content"
@@ -107,6 +134,7 @@
             android:background="@drawable/selector_toggle_button_yellow_middle"
             android:textOff="Medium"
             android:textOn="Medium" />
+
         <ToggleButton
             android:id="@+id/toggleButtonHard"
             android:layout_width="wrap_content"
@@ -116,6 +144,7 @@
             android:textOff="Hard"
             android:textOn="Hard" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -129,9 +158,10 @@
         android:background="@drawable/shape_title_yellow_normal"
         android:paddingLeft="8dip"
         android:paddingTop="4dip"
-        android:text="Player Name"
+        android:text="@string/player_name"
         android:textColor="@color/color_foreground"
         android:textSize="16sp" />
+
     <EditText
         android:id="@+id/editTextPlayerName"
         android:layout_width="wrap_content"
@@ -141,13 +171,15 @@
         android:layout_toRightOf="@+id/buttonLeft"
         android:background="@color/color_button_light"
         android:ems="10"
-        android:hint="Player name"
+        android:hint="@string/player_name"
         android:inputType="textPersonName"
         android:paddingLeft="8dip"
         android:paddingRight="8dip"
         android:singleLine="true" >
+
         <requestFocus />
     </EditText>
+
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="wrap_content"
@@ -160,6 +192,7 @@
         android:layout_marginRight="60dip"
         android:background="@drawable/selector_button_yellow"
         android:text="@string/button_text_play" />
+
     <Button
         android:id="@+id/buttonLeft"
         android:layout_width="wrap_content"
@@ -168,6 +201,7 @@
         android:layout_below="@+id/textView4"
         android:background="@drawable/selector_button_left_yellow"
         android:drawableRight="@drawable/navigation_previous_item_dark" />
+
     <Button
         android:id="@+id/buttonRight"
         android:layout_width="wrap_content"
@@ -176,4 +210,5 @@
         android:layout_below="@+id/textView4"
         android:background="@drawable/selector_button_right_yellow"
         android:drawableLeft="@drawable/navigation_next_item_dark" />
+
 </RelativeLayout>

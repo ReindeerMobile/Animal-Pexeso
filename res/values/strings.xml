@@ -5,6 +5,9 @@
     <string name="title_about">About</string>
     <string name="title_new_game">New Game</string>
     <string name="button_text_toplist">Toplist</string>
+    <string name="game_level">Game Level</string>
+    <string name="game_type">Game Type</string>
+    <string name="player_name">Player Name</string>
     <string name="button_text_play">Play</string>
     <string name="button_text_about">About</string>
     <string name="button_text_clear">Clear</string>
