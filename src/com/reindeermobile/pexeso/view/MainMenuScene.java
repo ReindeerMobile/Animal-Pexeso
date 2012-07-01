@@ -5,17 +5,16 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
-import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.region.TextureRegion;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.widget.Toast;
 
 import com.reindeermobile.pexeso.R;
-
-import android.graphics.Typeface;
 
 public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener {
     MemoryActivity activity;
@@ -67,9 +66,23 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 activity.getGameScene().resetGame();
                 activity.setCurrentScene(activity.getGameScene());
                 return true;
+            case MENU_TOPLIST:
+                createAboutBox();
+                break;
             default:
                 break;
         }
         return false;
+    }
+
+    private void createAboutBox() {
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                AlertDialog.Builder alertbox = new AlertDialog.Builder(activity);
+                alertbox.setMessage("Reindeer Mobile");
+                alertbox.setPositiveButton("OK", null);
+                alertbox.show();
+            }
+        });
     }
 }
