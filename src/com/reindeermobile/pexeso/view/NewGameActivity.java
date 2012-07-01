@@ -1,10 +1,7 @@
 
 package com.reindeermobile.pexeso.view;
 
-import com.reindeermobile.pexeso.R;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ToggleButton;
+
+import com.reindeermobile.pexeso.R;
 
 public class NewGameActivity extends Activity implements
         OnCheckedChangeListener, OnClickListener, OnFocusChangeListener {

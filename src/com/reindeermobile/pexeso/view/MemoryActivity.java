@@ -40,8 +40,8 @@ import com.reindeermobile.reindeerutils.mvp.Presenter;
 
 public class MemoryActivity extends BaseGameActivity {
 
-    private final int CAMERA_WIDTH = 480;
-    private final int CAMERA_HEIGHT = 720;
+    public static final int CAMERA_WIDTH = 480;
+    public static final int CAMERA_HEIGHT = 720;
 
     private Camera camera;
     private Scene splashScene;
@@ -75,12 +75,13 @@ public class MemoryActivity extends BaseGameActivity {
     private int solved = 0;
     protected float playTime = 0f;
 
-    private enum SceneType {
-        SPLASH,
-        MAIN
-    }
-
     private SceneType currentScene = SceneType.SPLASH;
+    
+    public static MemoryActivity instance;
+
+    public static MemoryActivity getSharedInstance() {
+        return instance;
+    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -119,7 +120,7 @@ public class MemoryActivity extends BaseGameActivity {
                 loadScenes();
                 splash.detachSelf();
                 mEngine.setScene(mainScene);
-                currentScene = SceneType.MAIN;
+                currentScene = SceneType.CLASSIC_GAME;
             }
         }));
 
@@ -132,7 +133,7 @@ public class MemoryActivity extends BaseGameActivity {
             switch (currentScene) {
                 case SPLASH:
                     break;
-                case MAIN:
+                case CLASSIC_GAME:
                     System.exit(0);
                     break;
             }
@@ -252,7 +253,7 @@ public class MemoryActivity extends BaseGameActivity {
 
     private void initSplashScene() {
         splashScene = new Scene();
-        splash = new Sprite(0, 0, splashTextureRegion, mEngine.getVertexBufferObjectManager()) {
+        splash = new Sprite(0, 0, splashTextureRegion, this.getVertexBufferObjectManager()) {
             @Override
             protected void preDraw(GLState pGLState, Camera pCamera) {
                 super.preDraw(pGLState, pCamera);
