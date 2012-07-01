@@ -10,9 +10,7 @@ import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.widget.Toast;
 
 import com.reindeermobile.pexeso.R;
 
@@ -48,7 +46,7 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 / 2, (mCamera.getHeight() / 2 - toplistButton.getHeight() / 2));
         addMenuItem(toplistButton);
 
-        IMenuItem aboutButton = new TextMenuItem(MENU_TOPLIST, mFont,
+        IMenuItem aboutButton = new TextMenuItem(MENU_ABOUT, mFont,
                 activity.getString(R.string.title_about),
                 activity.getVertexBufferObjectManager());
         aboutButton.setPosition(mCamera.getWidth() / 2 - aboutButton.getWidth()
@@ -67,6 +65,8 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 activity.setCurrentScene(activity.getGameScene());
                 return true;
             case MENU_TOPLIST:
+                break;
+            case MENU_ABOUT:
                 createAboutBox();
                 break;
             default:
