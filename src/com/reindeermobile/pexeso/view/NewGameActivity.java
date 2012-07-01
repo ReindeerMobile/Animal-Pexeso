@@ -220,13 +220,13 @@ public class NewGameActivity extends Activity implements
     }
 
     private void callGameActivity() {
-        Log.d(TAG, "callGameActivity - START");
-        Intent gameIntent = new Intent(this, GameActivity.class);
-        gameIntent.putExtra(SELECTED_GAME_LEVEL,
-                this.actualGameLevel.getValue());
-        gameIntent.putExtra(SELECTED_GAME_MODE, this.actualGameMode.getValue());
-        gameIntent.putExtra(SELECTED_PLAYER_NAME, this.actualPlayerName);
-        this.startActivity(gameIntent);
-        this.finish();
+//        Log.d(TAG, "callGameActivity - START");
+//        Intent gameIntent = new Intent(this, GameActivity.class);
+//        gameIntent.putExtra(SELECTED_GAME_LEVEL,
+//                this.actualGameLevel.getValue());
+//        gameIntent.putExtra(SELECTED_GAME_MODE, this.actualGameMode.getValue());
+//        gameIntent.putExtra(SELECTED_PLAYER_NAME, this.actualPlayerName);
+//        this.startActivity(gameIntent);
+//        this.finish();
     }
 }
