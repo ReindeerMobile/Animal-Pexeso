@@ -53,7 +53,12 @@ public class MemoryActivity extends BaseGameActivity {
         Display d = getWindowManager().getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
         d.getMetrics(metrics);
-        Log.d("pexeso", metrics.density + "");
+
+        CAMERA_WIDTH = d.getWidth();
+        CAMERA_HEIGHT = d.getHeight();
+
+        Log.d("pexeso", "width: " + CAMERA_WIDTH);
+        Log.d("pexeso", "height: " + CAMERA_HEIGHT);
 
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
@@ -66,10 +71,10 @@ public class MemoryActivity extends BaseGameActivity {
             throws Exception {
         SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         BuildableBitmapTextureAtlas pBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(
-                this.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+                this.getTextureManager(), 512, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         splashTextureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 pBuildableBitmapTextureAtlas,
-                this, "splash.svg", 300, 423);
+                this, "splash.svg", 320, 451);
         pBuildableBitmapTextureAtlas
                 .build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(
                         0, 0, 0));
@@ -139,7 +144,6 @@ public class MemoryActivity extends BaseGameActivity {
             }
         };
 
-        splash.setScale(1.5f);
         splash.setPosition((CAMERA_WIDTH - splash.getWidth()) * 0.5f,
                 (CAMERA_HEIGHT - splash.getHeight()) * 0.5f);
         splashScene.attachChild(splash);
