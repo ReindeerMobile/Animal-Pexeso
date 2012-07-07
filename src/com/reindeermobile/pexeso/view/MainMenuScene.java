@@ -5,9 +5,14 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 import android.app.AlertDialog;
 import android.graphics.Typeface;
@@ -32,11 +37,16 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 50);
         mFont.load();
 
-        IMenuItem newGameButton = new TextMenuItem(MENU_NEW_GAME, mFont,
-                activity.getString(R.string.title_new_game),
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(
+                activity.getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+        ITextureRegion pTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                splashTextureAtlas, activity, "button.png", 0, 0);
+        splashTextureAtlas.load();
+        IMenuItem newGameButton = new SpriteMenuItem(MENU_NEW_GAME, pTextureRegion,
                 activity.getVertexBufferObjectManager());
         newGameButton.setPosition(mCamera.getWidth() / 2 - newGameButton.getWidth()
-                / 2, (mCamera.getHeight() / 2 - newGameButton.getHeight() / 2) * 3 / 4);
+                / 2, (mCamera.getHeight() / 2 - newGameButton.getHeight() / 2) * 3 / 5);
         addMenuItem(newGameButton);
 
         IMenuItem toplistButton = new TextMenuItem(MENU_TOPLIST, mFont,

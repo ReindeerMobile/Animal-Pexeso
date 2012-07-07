@@ -6,30 +6,36 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
-import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 
 public class MemoryActivity extends BaseGameActivity {
 
-    public static final int CAMERA_WIDTH = 480;
-    public static final int CAMERA_HEIGHT = 720;
+    public static int CAMERA_WIDTH = 480;
+    public static int CAMERA_HEIGHT = 720;
 
     private Camera camera;
     private Scene splashScene;
     private GameScene gameScene;
     private MainMenuScene mainMenuScene;
 
-    private BitmapTextureAtlas splashTextureAtlas;
+    // private BitmapTextureAtlas splashTextureAtlas;
     private ITextureRegion splashTextureRegion;
     private Sprite splash;
 
@@ -44,21 +50,32 @@ public class MemoryActivity extends BaseGameActivity {
     @Override
     public EngineOptions onCreateEngineOptions() {
         instance = this;
+        Display d = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        Log.d("pexeso", metrics.density + "");
+
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
-                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+                new FillResolutionPolicy(), camera);
         return engineOptions;
     }
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback)
             throws Exception {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        splashTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 256, 256,
-                TextureOptions.DEFAULT);
-        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                splashTextureAtlas, this, "splash.png", 0, 0);
-        splashTextureAtlas.load();
+        SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        BuildableBitmapTextureAtlas pBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(
+                this.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        splashTextureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                pBuildableBitmapTextureAtlas,
+                this, "splash.svg", 300, 423);
+        pBuildableBitmapTextureAtlas
+                .build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(
+                        0, 0, 0));
+
+        this.mEngine.getTextureManager().loadTexture(pBuildableBitmapTextureAtlas);
+        pBuildableBitmapTextureAtlas.load();
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
@@ -110,20 +127,6 @@ public class MemoryActivity extends BaseGameActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // if (clickNumber > 0) {
-        // Record record = new Record();
-        // record.setClicks(clickNumber);
-        // record.setLevel(1);
-        // record.setTime(playTime);
-        //
-        // Bundle messageBundle = new Bundle();
-        // messageBundle.putParcelable(DatabaseController.SAVE_RECORD, record);
-        // Presenter.getInst().sendModelMessage(
-        // DatabaseController.SAVE_RECORD, messageBundle);
-        // // Presenter.getInst().sendModelMessage(
-        // // DatabaseController.SAVE_RECORD, new MessageObject(record));
-        // this.finish();
-        // }
     }
 
     private void initSplashScene() {
