@@ -6,30 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.engine.handler.timer.TimerHandler;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.TiledSprite;
-import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.font.Font;
-import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.util.color.Color;
+import org.anddev.andengine.engine.handler.timer.ITimerCallback;
+import org.anddev.andengine.engine.handler.timer.TimerHandler;
+import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
+import org.anddev.andengine.entity.sprite.TiledSprite;
+import org.anddev.andengine.entity.text.ChangeableText;
+import org.anddev.andengine.entity.text.Text;
+import org.anddev.andengine.input.touch.TouchEvent;
+import org.anddev.andengine.opengl.font.Font;
+import org.anddev.andengine.opengl.texture.TextureOptions;
+import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 
 public class GameScene extends Scene {
     private static final int CARD_NUMBERS = 29;
-    private static final int START_Y = 100;
-    private static final int START_X = 20;
-    private static final int X = 150;
-    private static final int Y = 150;
-    private static final float SCALE = 1.1f;
+    private static final int START_Y = 40;
+    private static final int START_X = -20;
+    private static final int X = 77;
+    private static final int Y = 77;
+    private static final float SCALE = 0.6f;
 
     private static final String TAG = "Pexeso";
 
@@ -40,29 +41,43 @@ public class GameScene extends Scene {
     private BitmapTextureAtlas mBitmapTextureAtlas;
     private BitmapTextureAtlas mFontTexture;
     private Font mFont;
-    private Text timeText;
-    private Text clickText;
+    private ChangeableText timeText;
+    private ChangeableText clickText;
     private int clickNumber = 0;
     private boolean isInPlay = false;
     private int solved = 0;
 
     MemoryActivity activity;
 
+    private TimerHandler pUpdateHandler = new TimerHandler(0.1f, true,
+            new ITimerCallback() {
+                float time = 0.0f;
+
+                @Override
+                public void onTimePassed(final TimerHandler pTimerHandler) {
+                    if (isInPlay) {
+                        time += 0.1f;
+                        timeText.setText(new DecimalFormat("#0.0")
+                                .format(time) + "");
+                    }
+                }
+            });
+
     public GameScene() {
         activity = MemoryActivity.getSharedInstance();
     }
 
     public void loadResources() {
-        mBitmapTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 512,
+        mBitmapTextureAtlas = new BitmapTextureAtlas(1024, 512,
                 TextureOptions.BILINEAR);
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
         activity.getTextureManager().loadTexture(mBitmapTextureAtlas);
-        this.mFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+        this.mFontTexture = new BitmapTextureAtlas(256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
-        this.mFont = new Font(activity.getFontManager(), this.mFontTexture, Typeface.create(
+        this.mFont = new Font(this.mFontTexture, Typeface.create(
                 Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
 
         activity.getTextureManager().loadTexture(this.mFontTexture);
@@ -70,45 +85,28 @@ public class GameScene extends Scene {
     }
 
     public void loadScenes() {
-        this.setBackground(new Background(0.098f, 0.62f, 0.87f));
+        this.setBackground(new ColorBackground(0.098f, 0.62f, 0.87f));
 
-        Text playerName = new Text(10, 10, this.mFont, "Player1",
-                activity.getVertexBufferObjectManager());
+        Text playerName = new Text(10, 10, this.mFont, "Player1");
         this.attachChild(playerName);
 
-        timeText = new Text(230, 10, this.mFont, "0123456789.",
-                activity.getVertexBufferObjectManager());
+        timeText = new ChangeableText(230, 10, this.mFont, "0123456789.");
         timeText.setText("0.0");
         this.attachChild(timeText);
 
-        clickText = new Text(400, 10, this.mFont, "0123456789",
-                activity.getVertexBufferObjectManager());
+        clickText = new ChangeableText(400, 10, this.mFont, "0123456789");
         clickText.setText("0");
         this.attachChild(clickText);
 
-        this.registerUpdateHandler(new TimerHandler(0.1f, true,
-                new ITimerCallback() {
-                    float time = 0.0f;
+        this.registerUpdateHandler(pUpdateHandler);
 
-                    @Override
-                    public void onTimePassed(final TimerHandler pTimerHandler) {
-                        if (isInPlay) {
-                            time += 0.1f;
-                            timeText.setText(new DecimalFormat("#0.0")
-                                    .format(time) + "");
-                        } else {
-                            if (time > 0.0) {
-                                Log.d(TAG, "onLoadScene - end");
-                            }
-                        }
-                    }
-                }));
-
+        long time = System.currentTimeMillis();
         TiledTextureRegion cardsTexture = BitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(this.mBitmapTextureAtlas, activity,
                         "cards.png", 0, 0, 8, 4);
+        Log.d(TAG, "loading time: " + (System.currentTimeMillis() - time));
 
-        List<Integer> randomCards = getRandomCards(CARD_NUMBERS, 6);
+        List<Integer> randomCards = getRandomCards(CARD_NUMBERS, 10);
 
         cardsSprite = new ArrayList<TiledSprite>();
         for (int i = 0; i < CARD_NUMBERS; i++) {
@@ -119,8 +117,8 @@ public class GameScene extends Scene {
         int y = START_Y;
 
         int cardIndex = 0;
-        for (int i = 3; i >= 0; i--) {
-            for (int j = 2; j >= 0; j--) {
+        for (int i = 4; i >= 0; i--) {
+            for (int j = 3; j >= 0; j--) {
                 Random random = new Random();
                 int index = random.nextInt(randomCards.size());
                 int card = randomCards.remove(index);
@@ -131,7 +129,7 @@ public class GameScene extends Scene {
             }
         }
 
-        this.setTouchAreaBindingOnActionDownEnabled(true);
+        this.setTouchAreaBindingEnabled(true);
     }
 
     private List<Integer> getRandomCards(int cardNumbers, int pairs) {
@@ -153,7 +151,7 @@ public class GameScene extends Scene {
 
     private void createCard(TiledTextureRegion cardsTexture, int x, int y,
             final int card, TiledSprite cardSprite, final int index) {
-        cardSprite = new TiledSprite(x, y, cardsTexture, activity.getVertexBufferObjectManager()) {
+        cardSprite = new TiledSprite(x, y, cardsTexture) {
 
             @Override
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
@@ -201,6 +199,7 @@ public class GameScene extends Scene {
     }
 
     public void resetGame() {
-
+        Log.d(TAG, "reset game");
+        // this.unregisterUpdateHandler(pUpdateHandler);
     }
 }
