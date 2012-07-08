@@ -55,6 +55,11 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                         pBuildableBitmapTextureAtlas,
                         activity, "toplist_button.svg", 256, 128, 1, 2);
 
+        TiledTextureRegion pTextureRegion3 = SVGBitmapTextureAtlasTextureRegionFactory
+                .createTiledFromAsset(
+                        pBuildableBitmapTextureAtlas,
+                        activity, "about_button.svg", 256, 128, 1, 2);
+
         try {
             pBuildableBitmapTextureAtlas
                     .build(new BlackPawnTextureBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(
@@ -76,7 +81,7 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 / 2, (mCamera.getHeight() / 2 - toplistButton.getHeight() / 2));
         addMenuItem(toplistButton);
 
-        IMenuItem aboutButton = new TiledSpriteMenuItem(MENU_ABOUT, pTextureRegion2);
+        IMenuItem aboutButton = new TiledSpriteMenuItem(MENU_ABOUT, pTextureRegion3);
         aboutButton.setPosition(mCamera.getWidth() / 2 - aboutButton.getWidth()
                 / 2, (int) ((mCamera.getHeight() / 2 - aboutButton.getHeight() / 2) + aboutButton
                 .getHeight() * 1.25));
