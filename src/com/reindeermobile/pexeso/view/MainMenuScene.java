@@ -5,6 +5,7 @@ import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
+import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -13,6 +14,7 @@ import org.anddev.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAt
 import org.anddev.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.anddev.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureBuilder;
 import org.anddev.andengine.opengl.texture.atlas.buildable.builder.ITextureBuilder.TextureAtlasSourcePackingException;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.app.AlertDialog;
@@ -23,11 +25,13 @@ import android.util.Log;
 import com.reideermobile.pexeso.util.TiledSpriteMenuItem;
 
 public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener {
+
     MemoryActivity activity;
 
-    final int MENU_NEW_GAME = 0;
-    final int MENU_TOPLIST = 1;
-    final int MENU_ABOUT = 2;
+    private static final int MENU_NEW_GAME = 0;
+    private static final int MENU_TOPLIST = 1;
+    private static final int MENU_ABOUT = 2;
+    private static final int MENU_FACEBOOK = 3;
 
     public MainMenuScene() {
         super(MemoryActivity.getSharedInstance().getCamera());
@@ -60,6 +64,25 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                         pBuildableBitmapTextureAtlas,
                         activity, "about_button.svg", 256, 128, 1, 2);
 
+        TextureRegion titleTexture = SVGBitmapTextureAtlasTextureRegionFactory
+                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "title.svg", 300, 150);
+        Sprite title = new Sprite(7, 7, titleTexture);
+        this.attachChild(title);
+
+        TiledTextureRegion facebookTexture = SVGBitmapTextureAtlasTextureRegionFactory
+                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "facebook.svg", 50,
+                        100, 1, 2);
+
+        TextureRegion twitterTexture = SVGBitmapTextureAtlasTextureRegionFactory
+                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "twitter.svg", 50, 50);
+        Sprite twitter = new Sprite(140, 400, twitterTexture);
+        this.attachChild(twitter);
+
+        TextureRegion googleTexture = SVGBitmapTextureAtlasTextureRegionFactory
+                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "google.svg", 50, 50);
+        Sprite google = new Sprite(200, 400, googleTexture);
+        this.attachChild(google);
+
         try {
             pBuildableBitmapTextureAtlas
                     .build(new BlackPawnTextureBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(
@@ -73,19 +96,26 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
         newGameButton.setPosition(mCamera.getWidth() / 2 - newGameButton.getWidth()
                 / 2,
                 (int) ((mCamera.getHeight() / 2 - newGameButton.getHeight() / 2) - newGameButton
-                        .getHeight() * 1.25));
+                        .getHeight() * 0.75));
         addMenuItem(newGameButton);
 
         IMenuItem toplistButton = new TiledSpriteMenuItem(MENU_TOPLIST, pTextureRegion2);
-        toplistButton.setPosition(mCamera.getWidth() / 2 - toplistButton.getWidth()
-                / 2, (mCamera.getHeight() / 2 - toplistButton.getHeight() / 2));
+        toplistButton.setPosition(
+                mCamera.getWidth() / 2 - toplistButton.getWidth()
+                        / 2, (int)
+                ((mCamera.getHeight() / 2 - toplistButton.getHeight() / 2)
+                + toplistButton.getHeight() * 0.5));
         addMenuItem(toplistButton);
 
         IMenuItem aboutButton = new TiledSpriteMenuItem(MENU_ABOUT, pTextureRegion3);
         aboutButton.setPosition(mCamera.getWidth() / 2 - aboutButton.getWidth()
                 / 2, (int) ((mCamera.getHeight() / 2 - aboutButton.getHeight() / 2) + aboutButton
-                .getHeight() * 1.25));
+                .getHeight() * 1.75));
         addMenuItem(aboutButton);
+
+        IMenuItem facebookButton = new TiledSpriteMenuItem(MENU_FACEBOOK, facebookTexture);
+        facebookButton.setPosition(80, 400);
+        addMenuItem(facebookButton);
 
         setOnMenuItemClickListener(this);
     }

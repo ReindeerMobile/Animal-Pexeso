@@ -78,7 +78,7 @@ public class GameScene extends Scene {
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
         this.mFont = new Font(this.mFontTexture, Typeface.create(
-                Typeface.DEFAULT, Typeface.BOLD), 32, true, Color.BLACK);
+                Typeface.DEFAULT, Typeface.BOLD), 16, true, Color.BLACK);
 
         activity.getTextureManager().loadTexture(this.mFontTexture);
         activity.getFontManager().loadFont(this.mFont);
@@ -90,11 +90,11 @@ public class GameScene extends Scene {
         Text playerName = new Text(10, 10, this.mFont, "Player1");
         this.attachChild(playerName);
 
-        timeText = new ChangeableText(230, 10, this.mFont, "0123456789.");
+        timeText = new ChangeableText(150, 10, this.mFont, "0123456789.");
         timeText.setText("0.0");
         this.attachChild(timeText);
 
-        clickText = new ChangeableText(400, 10, this.mFont, "0123456789");
+        clickText = new ChangeableText(250, 10, this.mFont, "0123456789");
         clickText.setText("0");
         this.attachChild(clickText);
 
