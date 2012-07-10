@@ -32,6 +32,7 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
     private static final int MENU_TOPLIST = 1;
     private static final int MENU_ABOUT = 2;
     private static final int MENU_FACEBOOK = 3;
+    private static final int MENU_TWITTER = 4;
 
     public MainMenuScene() {
         super(MemoryActivity.getSharedInstance().getCamera());
@@ -73,15 +74,9 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
                 .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "facebook.svg", 50,
                         100, 1, 2);
 
-        TextureRegion twitterTexture = SVGBitmapTextureAtlasTextureRegionFactory
-                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "twitter.svg", 50, 50);
-        Sprite twitter = new Sprite(140, 400, twitterTexture);
-        this.attachChild(twitter);
-
-        TextureRegion googleTexture = SVGBitmapTextureAtlasTextureRegionFactory
-                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "google.svg", 50, 50);
-        Sprite google = new Sprite(200, 400, googleTexture);
-        this.attachChild(google);
+        TiledTextureRegion twitterTexture = SVGBitmapTextureAtlasTextureRegionFactory
+                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "twitter.svg", 50,
+                        100, 1, 2);
 
         try {
             pBuildableBitmapTextureAtlas
@@ -114,19 +109,22 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
         addMenuItem(aboutButton);
 
         IMenuItem facebookButton = new TiledSpriteMenuItem(MENU_FACEBOOK, facebookTexture);
-        facebookButton.setPosition(80, 400);
+        facebookButton.setPosition(100, 400);
         addMenuItem(facebookButton);
+
+        IMenuItem twitterButton = new TiledSpriteMenuItem(MENU_TWITTER, twitterTexture);
+        twitterButton.setPosition(180, 400);
+        addMenuItem(twitterButton);
 
         setOnMenuItemClickListener(this);
     }
 
     @Override
-    public boolean onMenuItemClicked(MenuScene arg0, IMenuItem arg1,
-            float arg2, float arg3) {
-        switch (arg1.getID()) {
+    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem,
+            float pMenuItemLocalX, float pMenuItemLocalY) {
+        switch (pMenuItem.getID()) {
             case MENU_NEW_GAME:
-                activity.getGameScene().resetGame();
-                activity.setCurrentScene(activity.getGameScene());
+                activity.setCurrentScene(activity.getNewGameMenuScene());
                 return true;
             case MENU_TOPLIST:
                 break;

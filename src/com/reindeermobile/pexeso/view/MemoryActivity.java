@@ -39,6 +39,7 @@ public class MemoryActivity extends BaseGameActivity {
     private Scene splashScene;
     private GameScene gameScene;
     private MainMenuScene mainMenuScene;
+    private NewGameMenuScence newGameMenuScene;
 
     // private BitmapTextureAtlas splashTextureAtlas;
     private TextureRegion splashTextureRegion;
@@ -116,6 +117,8 @@ public class MemoryActivity extends BaseGameActivity {
                 gameScene.loadResources();
                 gameScene.loadScenes();
 
+                newGameMenuScene = new NewGameMenuScence();
+
                 splash.detachSelf();
                 setCurrentScene(mainMenuScene);
             }
@@ -131,8 +134,11 @@ public class MemoryActivity extends BaseGameActivity {
                 case MAIN_MENU:
                     System.exit(0);
                     break;
-                case CLASSIC_GAME:
+                case NEW_GAME:
                     setCurrentScene(mainMenuScene);
+                    break;
+                case CLASSIC_GAME:
+                    setCurrentScene(newGameMenuScene);
                     break;
             }
         }
@@ -159,6 +165,8 @@ public class MemoryActivity extends BaseGameActivity {
             currentScene = SceneType.CLASSIC_GAME;
         } else if (scene instanceof MainMenuScene) {
             currentScene = SceneType.MAIN_MENU;
+        } else if (scene instanceof NewGameMenuScence) {
+            currentScene = SceneType.NEW_GAME;
         }
         mEngine.setScene(scene);
     }
@@ -169,5 +177,13 @@ public class MemoryActivity extends BaseGameActivity {
 
     public GameScene getGameScene() {
         return gameScene;
+    }
+
+    public MainMenuScene getMainMenuScene() {
+        return mainMenuScene;
+    }
+
+    public NewGameMenuScence getNewGameMenuScene() {
+        return newGameMenuScene;
     }
 }
