@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="200" width="100" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <defs id="defs4">
-  <radialGradient id="radialGradient3777" gradientUnits="userSpaceOnUse" cy="768.62" cx="332.61" gradientTransform="matrix(0.2837866,-0.00313655,0.00323825,0.29351574,-47.530105,816.72414)" r="249.69">
-   <stop id="stop3771" stop-color="#526ea4" offset="0"/>
-   <stop id="stop3773" stop-color="#2c416e" offset="1"/>
-  </radialGradient>
- </defs>
- <metadata id="metadata7">
-  <rdf:RDF>
-   <cc:Work rdf:about="">
-    <dc:format>image/svg+xml</dc:format>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title/>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <g id="layer1" transform="matrix(1.0102041,0,0,1.0100992,0.74534878,-863.63448)">
-  <rect id="rect2998" stroke-linejoin="round" stroke-dasharray="none" fill-rule="evenodd" rx="11.534" ry="11.545" height="96" width="96" stroke="#FFF" stroke-linecap="round" stroke-miterlimit="4" y="956" x="0.26218" stroke-width="2" fill="url(#radialGradient3777)"/>
-  <g id="text2993" style="letter-spacing:0px;text-anchor:start;word-spacing:0px;text-align:start;" font-family="Sans" transform="scale(0.99954716,1.000453)" line-height="125%" font-size="60.10162354px" font-weight="normal" font-style="normal" fill="#FFF">
-   <path id="path2992" fill="#FFF" d="m46.977,982.84,9.1561,0,0-4.6954c-0.000011-5.2432,0.55757-9.156,1.6728-11.739,1.1152-2.5824,3.1694-4.6856,6.1628-6.3095,2.9933-1.6238,6.779-2.4357,11.357-2.4358,4.6954,0.00009,9.293,0.70441,13.793,2.113l-2.2303,11.504c-2.6217-0.62599-5.1455-0.93902-7.5714-0.93909-2.3869,0.00007-4.0988,0.55766-5.1356,1.6728-1.0369,1.1152-1.5554,3.2575-1.5554,6.4269v4.402h12.326v12.971h-12.327v49.361h-16.493v-49.361h-9.1561z"/>
-  </g>
-  <rect id="rect3784" fill-rule="evenodd" fill-opacity="0.29412" rx="3.0915" ry="3.0064" height="20.845" width="89.446" y="1024.8" x="5.2914" fill="#FFF"/>
- </g>
- <g id="layer1-0" transform="matrix(1.0102041,0,0,1.0100992,0.74529634,-963.63451)">
-  <rect id="rect2998-9" stroke-linejoin="round" stroke-dasharray="none" fill-rule="evenodd" rx="11.534" ry="11.545" height="96" width="96" stroke="#000" stroke-linecap="round" stroke-miterlimit="4" y="956" x="0.26218" stroke-width="2" fill="url(#radialGradient3777)"/>
-  <g id="text2993-4" style="letter-spacing:0px;text-anchor:start;word-spacing:0px;text-align:start;" font-family="Sans" transform="scale(0.99954716,1.000453)" line-height="125%" font-size="60.10162354px" font-weight="normal" font-style="normal" fill="#FFF">
-   <path id="path2992-8" fill="#FFF" d="m46.977,982.84,9.1561,0,0-4.6954c-0.000011-5.2432,0.55757-9.156,1.6728-11.739,1.1152-2.5824,3.1694-4.6856,6.1628-6.3095,2.9933-1.6238,6.779-2.4357,11.357-2.4358,4.6954,0.00009,9.293,0.70441,13.793,2.113l-2.2303,11.504c-2.6217-0.62599-5.1455-0.93902-7.5714-0.93909-2.3869,0.00007-4.0988,0.55766-5.1356,1.6728-1.0369,1.1152-1.5554,3.2575-1.5554,6.4269v4.402h12.326v12.971h-12.327v49.361h-16.493v-49.361h-9.1561z"/>
-  </g>
-  <rect id="rect3784-8" fill-rule="evenodd" fill-opacity="0.29412" rx="3.0915" ry="3.0064" height="20.845" width="89.446" y="1024.8" x="5.2914" fill="#FFF"/>
- </g>
+<svg id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="200" width="100" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<defs id="defs4">
+<radialGradient id="radialGradient2995" gradientUnits="userSpaceOnUse" cy="768.62" cx="332.61" gradientTransform="matrix(0.2837866,-0.00313655,0.00323825,0.29351574,-47.530105,816.72414)" r="249.69">
+<stop id="stop3771" stop-color="#526ea4" offset="0"/>
+<stop id="stop3773" stop-color="#2c416e" offset="1"/>
+</radialGradient>
+</defs>
+<g id="layer1" transform="matrix(1.0204093,0,0,1.0204071,0.75287785,-874.48869)">
+<rect id="rect2998" stroke-linejoin="round" fill-rule="evenodd" rx="11.534" ry="11.545" height="96" width="96" stroke="#FFF" stroke-linecap="round" stroke-dasharray="none" x="0.26218" y="956" stroke-miterlimit="4" stroke-width="2" fill="url(#radialGradient2995)"/>
+<g id="text2993" style="word-spacing:0px;letter-spacing:0px;text-anchor:start;text-align:start;" font-weight="normal" transform="scale(0.99954716,1.000453)" font-size="60.10162354px" line-height="125%" font-family="Sans" font-style="normal" fill="#FFF">
+<path id="path2992" d="m46.977,982.84,9.1561,0,0-4.6954c-0.000011-5.2432,0.55757-9.156,1.6728-11.739,1.1152-2.5824,3.1694-4.6856,6.1628-6.3095,2.9933-1.6238,6.779-2.4357,11.357-2.4358,4.6954,0.00009,9.293,0.70441,13.793,2.113l-2.2303,11.504c-2.6217-0.62599-5.1455-0.93902-7.5714-0.93909-2.3869,0.00007-4.0988,0.55766-5.1356,1.6728-1.0369,1.1152-1.5554,3.2575-1.5554,6.4269v4.402h12.326v12.971h-12.328v49.361h-16.493v-49.361h-9.1561z" fill="#FFF"/>
+</g>
+<rect id="rect3784" fill-opacity="0.29412" fill-rule="evenodd" rx="3.0915" ry="3.0064" height="20.845" width="89.446" y="1024.8" x="5.2914" fill="#FFF"/>
+</g>
+<g id="layer1-0" transform="matrix(1.0205136,0,0,1.0203011,0.7529019,-974.37716)">
+<rect id="rect2998-9" stroke-linejoin="round" fill-rule="evenodd" rx="11.534" ry="11.545" height="96" width="96" stroke="#000" stroke-linecap="round" stroke-dasharray="none" x="0.26218" y="956" stroke-miterlimit="4" stroke-width="2" fill="url(#radialGradient2995)"/>
+<g id="text2993-4" style="word-spacing:0px;letter-spacing:0px;text-anchor:start;text-align:start;" font-weight="normal" transform="scale(0.99954716,1.000453)" font-size="60.10162354px" line-height="125%" font-family="Sans" font-style="normal" fill="#FFF">
+<path id="path2992-8" d="m46.977,982.84,9.1561,0,0-4.6954c-0.000011-5.2432,0.55757-9.156,1.6728-11.739,1.1152-2.5824,3.1694-4.6856,6.1628-6.3095,2.9933-1.6238,6.779-2.4357,11.357-2.4358,4.6954,0.00009,9.293,0.70441,13.793,2.113l-2.2303,11.504c-2.6217-0.62599-5.1455-0.93902-7.5714-0.93909-2.3869,0.00007-4.0988,0.55766-5.1356,1.6728-1.0369,1.1152-1.5554,3.2575-1.5554,6.4269v4.402h12.326v12.971h-12.328v49.361h-16.493v-49.361h-9.1561z" fill="#FFF"/>
+</g>
+<rect id="rect3784-8" fill-opacity="0.29412" fill-rule="evenodd" rx="3.0915" ry="3.0064" height="20.845" width="89.446" y="1024.8" x="5.2914" fill="#FFF"/>
+</g>
 </svg>

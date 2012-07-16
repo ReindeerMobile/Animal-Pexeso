@@ -15,13 +15,13 @@ import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.font.Font;
+import org.anddev.andengine.opengl.font.FontFactory;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.Log;
 
 public class GameScene extends Scene {
@@ -72,13 +72,14 @@ public class GameScene extends Scene {
                 TextureOptions.BILINEAR);
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
         activity.getTextureManager().loadTexture(mBitmapTextureAtlas);
+
+        FontFactory.setAssetBasePath("font/");
         this.mFontTexture = new BitmapTextureAtlas(256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
-        this.mFont = new Font(this.mFontTexture, Typeface.create(
-                Typeface.DEFAULT, Typeface.BOLD), 16, true, Color.BLACK);
+        this.mFont = FontFactory.createFromAsset(this.mFontTexture, activity, "LondrinaShadow-Regular.ttf",
+                16, true, Color.BLACK);
 
         activity.getTextureManager().loadTexture(this.mFontTexture);
         activity.getFontManager().loadFont(this.mFont);

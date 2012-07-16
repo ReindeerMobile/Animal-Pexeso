@@ -21,6 +21,8 @@ import org.anddev.andengine.opengl.texture.atlas.buildable.builder.ITextureBuild
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
+import com.Leadbolt.AdController;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -55,6 +57,11 @@ public class MemoryActivity extends BaseGameActivity {
 
     @Override
     public Engine onLoadEngine() {
+        AdController myController = new AdController(getApplicationContext(),
+                "330849438");
+        myController.setAsynchTask(true);
+        myController.loadIcon();
+
         instance = this;
         Display d = getWindowManager().getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
