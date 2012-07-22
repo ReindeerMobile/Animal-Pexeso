@@ -49,15 +49,15 @@ public class GameScene extends Scene {
 
     MemoryActivity activity;
 
-    private TimerHandler pUpdateHandler = new TimerHandler(0.1f, true,
+    private TimerHandler pUpdateHandler = new TimerHandler(0.01f, true,
             new ITimerCallback() {
-                float time = 0.0f;
+                float time = 0.00f;
 
                 @Override
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     if (isInPlay) {
-                        time += 0.1f;
-                        timeText.setText(new DecimalFormat("#0.0")
+                        time += 0.01f;
+                        timeText.setText(new DecimalFormat("#0.00")
                                 .format(time) + "");
                     }
                 }

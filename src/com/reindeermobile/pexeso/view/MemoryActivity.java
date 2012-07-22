@@ -22,6 +22,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import com.Leadbolt.AdController;
+import com.Leadbolt.AdLog;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -57,10 +58,10 @@ public class MemoryActivity extends BaseGameActivity {
 
     @Override
     public Engine onLoadEngine() {
-        AdController myController = new AdController(getApplicationContext(),
-                "330849438");
+        AdController myController = new AdController(getApplicationContext(), "710347722");
+        AdLog.enableLog(true);
         myController.setAsynchTask(true);
-        myController.loadIcon();
+        myController.loadNotification();
 
         instance = this;
         Display d = getWindowManager().getDefaultDisplay();
