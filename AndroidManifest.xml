@@ -32,12 +32,32 @@
         </activity>
 
         <receiver android:name="com.Leadbolt.AdNotification" />
-<!--         <receiver android:name="com.reindeermobile.pexeso.util.BootReceiver"  -->
-<!--             android:exported="false"> -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
-<!--             </intent-filter> -->
-<!--         </receiver> -->
+        <receiver
+            android:name="com.reindeermobile.pexeso.util.BootReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- AppBrain SDK -->
+        <activity
+            android:name="com.appbrain.AppBrainActivity"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <service android:name="com.appbrain.AppBrainService" />
+
+        <receiver
+            android:name="com.appbrain.ReferrerReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

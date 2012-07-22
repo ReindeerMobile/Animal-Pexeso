@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 
+import com.appbrain.AppBrain;
 import com.reideermobile.pexeso.util.TiledSpriteMenuItem;
 
 public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener {
@@ -129,7 +130,7 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
             case MENU_TOPLIST:
                 break;
             case MENU_ABOUT:
-                createAboutBox();
+                AppBrain.getAds().showInterstitial(activity);
                 break;
             default:
                 break;

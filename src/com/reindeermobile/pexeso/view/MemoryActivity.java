@@ -140,7 +140,7 @@ public class MemoryActivity extends BaseGameActivity {
                 case SPLASH:
                     break;
                 case MAIN_MENU:
-                    System.exit(0);
+                    finish();
                     break;
                 case NEW_GAME:
                     setCurrentScene(mainMenuScene);
