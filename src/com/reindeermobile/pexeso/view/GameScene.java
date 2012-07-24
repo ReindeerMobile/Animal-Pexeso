@@ -25,12 +25,13 @@ import android.graphics.Color;
 import android.util.Log;
 
 public class GameScene extends Scene {
+    private static final int PAIRS = 6;
     private static final int CARD_NUMBERS = 29;
-    private static final int START_Y = 40;
-    private static final int START_X = -20;
-    private static final int X = 77;
-    private static final int Y = 77;
-    private static final float SCALE = 0.6f;
+    private static final int START_Y = 70;
+    private static final int START_X = 20;
+    private static final float SCALE = 1.15f;
+    private static final int X = (int) (135 * SCALE);
+    private static final int Y = (int) (135 * SCALE);
 
     private static final String TAG = "Pexeso";
 
@@ -45,19 +46,20 @@ public class GameScene extends Scene {
     private ChangeableText clickText;
     private int clickNumber = 0;
     private boolean isInPlay = false;
+    private boolean firstTouch = true;
     private int solved = 0;
 
     MemoryActivity activity;
 
-    private TimerHandler pUpdateHandler = new TimerHandler(0.01f, true,
+    private TimerHandler pUpdateHandler = new TimerHandler(0.1f, true,
             new ITimerCallback() {
-                float time = 0.00f;
+                float time = 0.0f;
 
                 @Override
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     if (isInPlay) {
-                        time += 0.01f;
-                        timeText.setText(new DecimalFormat("#0.00")
+                        time += 0.1f;
+                        timeText.setText(new DecimalFormat("#0.0")
                                 .format(time) + "");
                     }
                 }
@@ -78,8 +80,9 @@ public class GameScene extends Scene {
         this.mFontTexture = new BitmapTextureAtlas(256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
-        this.mFont = FontFactory.createFromAsset(this.mFontTexture, activity, "LondrinaShadow-Regular.ttf",
-                16, true, Color.BLACK);
+        this.mFont = FontFactory.createFromAsset(this.mFontTexture, activity,
+                "DroidSans-Bold.ttf",
+                32, true, Color.WHITE);
 
         activity.getTextureManager().loadTexture(this.mFontTexture);
         activity.getFontManager().loadFont(this.mFont);
@@ -88,14 +91,17 @@ public class GameScene extends Scene {
     public void loadScenes() {
         this.setBackground(new ColorBackground(0.098f, 0.62f, 0.87f));
 
-        Text playerName = new Text(10, 10, this.mFont, "Player1");
-        this.attachChild(playerName);
+        Text timeLabel = new Text(10, 10, this.mFont, "Time:");
+        this.attachChild(timeLabel);
 
-        timeText = new ChangeableText(150, 10, this.mFont, "0123456789.");
+        timeText = new ChangeableText(120, 10, this.mFont, "0123456789.");
         timeText.setText("0.0");
         this.attachChild(timeText);
 
-        clickText = new ChangeableText(250, 10, this.mFont, "0123456789");
+        Text clickLabel = new Text(200, 10, this.mFont, "Clicks:");
+        this.attachChild(clickLabel);
+
+        clickText = new ChangeableText(350, 10, this.mFont, "0123456789");
         clickText.setText("0");
         this.attachChild(clickText);
 
@@ -107,7 +113,7 @@ public class GameScene extends Scene {
                         "cards.png", 0, 0, 8, 4);
         Log.d(TAG, "loading time: " + (System.currentTimeMillis() - time));
 
-        List<Integer> randomCards = getRandomCards(CARD_NUMBERS, 10);
+        List<Integer> randomCards = getRandomCards(CARD_NUMBERS, PAIRS);
 
         cardsSprite = new ArrayList<TiledSprite>();
         for (int i = 0; i < CARD_NUMBERS; i++) {
@@ -118,8 +124,8 @@ public class GameScene extends Scene {
         int y = START_Y;
 
         int cardIndex = 0;
-        for (int i = 4; i >= 0; i--) {
-            for (int j = 3; j >= 0; j--) {
+        for (int i = 0; i <= 3; i++) {
+            for (int j = 0; j <= 2; j++) {
                 Random random = new Random();
                 int index = random.nextInt(randomCards.size());
                 int card = randomCards.remove(index);
@@ -158,35 +164,40 @@ public class GameScene extends Scene {
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
                     final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
                 if (pSceneTouchEvent.isActionDown()) {
-                    GameScene.this.isInPlay = true;
-                    GameScene.this.clickNumber++;
-                    GameScene.this.clickText
-                            .setText(GameScene.this.clickNumber + "");
-                    this.setCurrentTileIndex(card);
-                    if (GameScene.this.lastIndex >= 0) {
-                        if (GameScene.this.lastIndex != index
-                                && GameScene.this.table.get(index) != GameScene.this.table
-                                        .get(GameScene.this.lastIndex)
-                                && GameScene.this.table
-                                        .get(GameScene.this.lastIndex) != 100
-                                && GameScene.this.table.get(index) != 100) {
-                            GameScene.this.cardsSprite.get(
-                                    GameScene.this.lastIndex)
-                                    .setCurrentTileIndex(0);
-                        }
-                        if (GameScene.this.table.get(index) == GameScene.this.table
-                                .get(GameScene.this.lastIndex)
-                                && index != GameScene.this.lastIndex) {
-                            GameScene.this.solved++;
-                            if (GameScene.this.solved > 5) {
-                                GameScene.this.isInPlay = false;
-                            }
-                            GameScene.this.table.set(index, 100);
-                            GameScene.this.table.set(
-                                    GameScene.this.lastIndex, 100);
-                        }
+                    if (GameScene.this.firstTouch) {
+                        GameScene.this.isInPlay = true;
+                        GameScene.this.firstTouch = false;
                     }
-                    GameScene.this.lastIndex = index;
+                    if (GameScene.this.isInPlay) {
+                        GameScene.this.clickNumber++;
+                        GameScene.this.clickText
+                                .setText(GameScene.this.clickNumber + "");
+                        this.setCurrentTileIndex(card);
+                        if (GameScene.this.lastIndex >= 0) {
+                            if (GameScene.this.lastIndex != index
+                                    && GameScene.this.table.get(index) != GameScene.this.table
+                                            .get(GameScene.this.lastIndex)
+                                    && GameScene.this.table
+                                            .get(GameScene.this.lastIndex) != 100
+                                    && GameScene.this.table.get(index) != 100) {
+                                GameScene.this.cardsSprite.get(
+                                        GameScene.this.lastIndex)
+                                        .setCurrentTileIndex(0);
+                            }
+                            if (GameScene.this.table.get(index) == GameScene.this.table
+                                    .get(GameScene.this.lastIndex)
+                                    && index != GameScene.this.lastIndex) {
+                                GameScene.this.solved++;
+                                if (GameScene.this.solved >= PAIRS) {
+                                    GameScene.this.isInPlay = false;
+                                }
+                                GameScene.this.table.set(index, 100);
+                                GameScene.this.table.set(
+                                        GameScene.this.lastIndex, 100);
+                            }
+                        }
+                        GameScene.this.lastIndex = index;
+                    }
                 }
                 return true;
             }
@@ -201,6 +212,7 @@ public class GameScene extends Scene {
 
     public void resetGame() {
         Log.d(TAG, "reset game");
-        // this.unregisterUpdateHandler(pUpdateHandler);
+        this.clickNumber = 0;
+        clickText.setText("0");
     }
 }

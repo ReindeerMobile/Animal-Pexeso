@@ -7,7 +7,7 @@ import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
-import org.anddev.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -21,14 +21,13 @@ import org.anddev.andengine.opengl.texture.atlas.buildable.builder.ITextureBuild
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
-import com.Leadbolt.AdController;
-import com.Leadbolt.AdLog;
-
-import android.util.DisplayMetrics;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.KeyEvent;
+
+import com.Leadbolt.AdController;
+import com.Leadbolt.AdLog;
 
 public class MemoryActivity extends BaseGameActivity {
 
@@ -44,7 +43,6 @@ public class MemoryActivity extends BaseGameActivity {
     private MainMenuScene mainMenuScene;
     private NewGameMenuScence newGameMenuScene;
 
-    // private BitmapTextureAtlas splashTextureAtlas;
     private TextureRegion splashTextureRegion;
     private Sprite splash;
 
@@ -57,22 +55,17 @@ public class MemoryActivity extends BaseGameActivity {
     }
 
     @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+    }
+
+    @Override
     public Engine onLoadEngine() {
-        AdController myController = new AdController(getApplicationContext(), "710347722");
-        AdLog.enableLog(true);
+        AdController myController = new AdController(getApplicationContext(), "215327244");
         myController.setAsynchTask(true);
-        myController.loadNotification();
+        myController.loadIcon();
 
         instance = this;
-        Display d = getWindowManager().getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        d.getMetrics(metrics);
-
-        CAMERA_WIDTH = d.getWidth();
-        CAMERA_HEIGHT = d.getHeight();
-
-        Log.d("pexeso", "width: " + CAMERA_WIDTH);
-        Log.d("pexeso", "height: " + CAMERA_HEIGHT);
 
         scale = (float) CAMERA_HEIGHT / SPLASH_HEIGHT * 0.9f;
         Log.d("pexeso", scale + "");
@@ -83,7 +76,7 @@ public class MemoryActivity extends BaseGameActivity {
 
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         Engine engine = new Engine(new EngineOptions(true, ScreenOrientation.PORTRAIT,
-                new FillResolutionPolicy(), camera));
+                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
         return engine;
     }
 

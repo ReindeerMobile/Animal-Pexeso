@@ -1,5 +1,5 @@
 
-package com.reideermobile.pexeso.util;
+package com.reindeermobile.pexeso.util;
 
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.sprite.TiledSprite;

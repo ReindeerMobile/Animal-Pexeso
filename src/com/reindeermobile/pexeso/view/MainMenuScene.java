@@ -10,6 +10,7 @@ import org.anddev.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapT
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.anddev.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureBuilder;
@@ -23,7 +24,7 @@ import android.graphics.Typeface;
 import android.util.Log;
 
 import com.appbrain.AppBrain;
-import com.reideermobile.pexeso.util.TiledSpriteMenuItem;
+import com.reindeermobile.pexeso.util.TiledSpriteMenuItem;
 
 public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener {
 
@@ -48,36 +49,37 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
         activity.getEngine().getTextureManager().loadTexture(mFontTexture);
         activity.getEngine().getFontManager().loadFont(mFont);
 
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         BuildableBitmapTextureAtlas pBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(
                 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         TiledTextureRegion pTextureRegion = SVGBitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(
                         pBuildableBitmapTextureAtlas,
-                        activity, "play_button.svg", 256, 128, 1, 2);
+                        activity, "play_button.svg", 400, 200, 1, 2);
 
         TiledTextureRegion pTextureRegion2 = SVGBitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(
                         pBuildableBitmapTextureAtlas,
-                        activity, "toplist_button.svg", 256, 128, 1, 2);
+                        activity, "toplist_button.svg", 400, 200, 1, 2);
 
         TiledTextureRegion pTextureRegion3 = SVGBitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(
                         pBuildableBitmapTextureAtlas,
-                        activity, "about_button.svg", 256, 128, 1, 2);
+                        activity, "about_button.svg", 400, 200, 1, 2);
 
-        TextureRegion titleTexture = SVGBitmapTextureAtlasTextureRegionFactory
-                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "title.svg", 300, 150);
+        TextureRegion titleTexture = BitmapTextureAtlasTextureRegionFactory
+                .createFromAsset(pBuildableBitmapTextureAtlas, activity, "title.png");
         Sprite title = new Sprite(7, 7, titleTexture);
         this.attachChild(title);
 
         TiledTextureRegion facebookTexture = SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "facebook.svg", 50,
-                        100, 1, 2);
+                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "facebook.svg", 70,
+                        140, 1, 2);
 
         TiledTextureRegion twitterTexture = SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "twitter.svg", 50,
-                        100, 1, 2);
+                .createTiledFromAsset(pBuildableBitmapTextureAtlas, activity, "twitter.svg", 70,
+                        140, 1, 2);
 
         try {
             pBuildableBitmapTextureAtlas
@@ -110,11 +112,11 @@ public class MainMenuScene extends MenuScene implements IOnMenuItemClickListener
         addMenuItem(aboutButton);
 
         IMenuItem facebookButton = new TiledSpriteMenuItem(MENU_FACEBOOK, facebookTexture);
-        facebookButton.setPosition(100, 400);
+        facebookButton.setPosition(160, 620);
         addMenuItem(facebookButton);
 
         IMenuItem twitterButton = new TiledSpriteMenuItem(MENU_TWITTER, twitterTexture);
-        twitterButton.setPosition(180, 400);
+        twitterButton.setPosition(260, 620);
         addMenuItem(twitterButton);
 
         setOnMenuItemClickListener(this);

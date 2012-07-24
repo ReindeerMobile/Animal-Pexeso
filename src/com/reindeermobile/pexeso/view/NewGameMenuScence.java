@@ -16,7 +16,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.util.Log;
 
-import com.reideermobile.pexeso.util.TiledSpriteMenuItem;
+import com.reindeermobile.pexeso.util.TiledSpriteMenuItem;
 
 public class NewGameMenuScence extends MenuScene implements IOnMenuItemClickListener {
 
