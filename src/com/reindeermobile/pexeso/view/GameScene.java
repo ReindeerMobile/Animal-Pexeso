@@ -26,7 +26,7 @@ import android.util.Log;
 
 public class GameScene extends Scene {
     private static final int PAIRS = 6;
-    private static final int CARD_NUMBERS = 29;
+    private static final int CARD_NUMBERS = 31;
     private static final int START_Y = 70;
     private static final int START_X = 20;
     private static final float SCALE = 1.15f;
