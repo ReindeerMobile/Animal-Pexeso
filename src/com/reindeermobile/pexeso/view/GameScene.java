@@ -48,12 +48,12 @@ public class GameScene extends Scene {
     private boolean isInPlay = false;
     private boolean firstTouch = true;
     private int solved = 0;
+    private float time = 0.0f;
 
     MemoryActivity activity;
 
     private TimerHandler pUpdateHandler = new TimerHandler(0.1f, true,
             new ITimerCallback() {
-                float time = 0.0f;
 
                 @Override
                 public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -64,6 +64,8 @@ public class GameScene extends Scene {
                     }
                 }
             });
+    
+    private TiledTextureRegion cardsTexture;
 
     public GameScene() {
         activity = MemoryActivity.getSharedInstance();
@@ -105,19 +107,36 @@ public class GameScene extends Scene {
         clickText.setText("0");
         this.attachChild(clickText);
 
-        this.registerUpdateHandler(pUpdateHandler);
-
-        long time = System.currentTimeMillis();
-        TiledTextureRegion cardsTexture = BitmapTextureAtlasTextureRegionFactory
+        cardsTexture = BitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(this.mBitmapTextureAtlas, activity,
                         "cards.png", 0, 0, 8, 4);
         Log.d(TAG, "loading time: " + (System.currentTimeMillis() - time));
+    }
+
+    public void resetGame() {
+        Log.d(TAG, "reset game");
+        this.isInPlay = false;
+        this.firstTouch = true;
+        this.solved = 0;
+        this.lastIndex = -1;
+        this.clickNumber = 0;
+        clickText.setText("0");
+        this.time = 0.0f;
+        timeText.setText("0.0");
+        if (this.cardsSprite != null) {
+            for (TiledSprite sprite : this.cardsSprite) {
+                this.unregisterTouchArea(sprite);
+                this.detachChild(sprite);
+            }
+        }
+        table = new ArrayList<Integer>();
+        this.unregisterUpdateHandler(pUpdateHandler);
 
         List<Integer> randomCards = getRandomCards(CARD_NUMBERS, PAIRS);
 
-        cardsSprite = new ArrayList<TiledSprite>();
+        this.cardsSprite = new ArrayList<TiledSprite>();
         for (int i = 0; i < CARD_NUMBERS; i++) {
-            cardsSprite.add(null);
+            this.cardsSprite.add(null);
         }
 
         int x = START_X;
@@ -137,6 +156,8 @@ public class GameScene extends Scene {
         }
 
         this.setTouchAreaBindingEnabled(true);
+
+        this.registerUpdateHandler(pUpdateHandler);
     }
 
     private List<Integer> getRandomCards(int cardNumbers, int pairs) {
@@ -208,11 +229,5 @@ public class GameScene extends Scene {
         this.registerTouchArea(cardSprite);
 
         GameScene.this.cardsSprite.set(index, cardSprite);
-    }
-
-    public void resetGame() {
-        Log.d(TAG, "reset game");
-        this.clickNumber = 0;
-        clickText.setText("0");
     }
 }
